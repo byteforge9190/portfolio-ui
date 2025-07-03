@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Private documentation files
+FIXES_APPLIED.md
+.COMPONENT_ISSUES_FIXED.md
+.COMPONENT_ISSUES_FIXED.md
+COMPREHENSIVE_ANALYSIS.md
+ESLINT_FIXES.md
