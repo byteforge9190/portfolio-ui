@@ -4,17 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
 import ProjectCard from '../components/ProjectCard';
-
-// Why: Define the type for our project data.
-interface Project {
-  _id: string;
-  title: string;
-  description: string;
-  technologies: string[];
-  githubUrl?: string;
-  liveUrl?: string;
-  user: { email: string };
-}
+import type { Project } from '../types';
 
 const Projects: React.FC = () => {
   // Why: Use state to store the fetched projects and loading/error status.
@@ -59,12 +49,15 @@ const Projects: React.FC = () => {
   }
 
   return (
-    <>
-      {/* Why: Map over the projects array and render a ProjectCard for each one. */}
-      {projects.map((project) => (
-        <ProjectCard key={project._id} project={project} />
-      ))}
-    </>
+    <div>
+      <h1 className="text-4xl font-bold mb-8 text-center text-teal-300">My Portfolio Projects</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Why: Map over the projects array and render a ProjectCard for each one. */}
+        {projects.map((project) => (
+          <ProjectCard key={project._id} project={project} />
+        ))}
+      </div>
+    </div>
   );
 };
 

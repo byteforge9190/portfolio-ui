@@ -2,18 +2,7 @@
 // Why: This component displays a single project's details in a card format.
 
 import React from 'react';
-
-// Why: Define the expected structure of a project object.
-// This is a key benefit of using TypeScript.
-interface Project {
-  _id: string;
-  title: string;
-  description: string;
-  technologies: string[];
-  githubUrl?: string;
-  liveUrl?: string;
-  user: { email: string };
-}
+import type { Project } from '../types';
 
 interface ProjectCardProps {
   project: Project;
