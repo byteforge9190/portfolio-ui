@@ -17,8 +17,8 @@ const DebugInfo: React.FC = () => {
       setApiTest(`✅ Success: ${response.data.data?.length || 0} projects found`);
     } catch (err: unknown) {
       if (err && typeof err === 'object' && 'response' in err) {
-        const apiError = err as { response?: { status?: number; data?: any } };
-        setApiTest(`❌ Error: ${apiError.response?.status} - ${JSON.stringify(apiError.response?.data)}`);
+        const apiError = err as { response?: { status?: number; data?: { message?: string } } };
+        setApiTest(`❌ Error: ${apiError.response?.status} - ${apiError.response?.data?.message || JSON.stringify(apiError.response?.data)}`);
       } else {
         setApiTest(`❌ Network Error: ${err}`);
       }
