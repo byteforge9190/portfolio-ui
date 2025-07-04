@@ -30,4 +30,33 @@ api.interceptors.request.use(
   }
 );
 
+// Why: Add a response interceptor to handle authentication errors globally
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    // Log detailed error information for debugging
+    console.error('API Error:', {
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      data: error.response?.data,
+      url: error.config?.url,
+      method: error.config?.method,
+      headers: error.config?.headers
+    });
+    
+    // Handle 401 errors (unauthorized)
+    if (error.response?.status === 401) {
+      console.warn('Authentication failed - token may be expired');
+      // Optionally clear the token and redirect to login
+      // localStorage.removeItem('token');
+      // localStorage.removeItem('user');
+      // window.location.href = '/login';
+    }
+    
+    return Promise.reject(error);
+  }
+);
+
 export default api;
