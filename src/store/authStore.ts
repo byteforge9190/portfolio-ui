@@ -13,25 +13,37 @@ interface AuthState {
   logout: () => void;
 }
 
+// Why: Helper function to safely access localStorage
+const getStorageItem = (key: string): string | null => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem(key);
+  }
+  return null;
+};
+
 // Why: Create the store. Zustand is simple and uses a hook-like API.
 export const useAuthStore = create<AuthState>((set) => ({
   // Why: Initialize the state with values from localStorage.
   // This allows the user to stay logged in across page reloads.
-  token: localStorage.getItem('token'),
-  user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : null,
-  isAuthenticated: !!localStorage.getItem('token'), // Check if token exists
+  token: getStorageItem('token'),
+  user: getStorageItem('user') ? JSON.parse(getStorageItem('user')!) : null,
+  isAuthenticated: !!getStorageItem('token'), // Check if token exists
 
   // Why: The 'login' function updates the state and stores data in localStorage.
   login: (token, user) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+    }
     set({ token, user, isAuthenticated: true });
   },
 
   // Why: The 'logout' function clears the state and localStorage.
   logout: () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+    }
     set({ token: null, user: null, isAuthenticated: false });
   },
 }));
