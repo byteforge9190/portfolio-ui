@@ -1,10 +1,11 @@
 // src/pages/Login.tsx
-// Why: This component provides a login form for existing users.
+// Why: This component provides a login form for existing users with role-based authentication.
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api/axios';
 import { useAuthStore } from '../store/authStore';
+import { authAPI, handleAPIError } from '../api/services';
+import { toast } from 'react-toastify';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -13,28 +14,38 @@ const Login: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
-  const login = useAuthStore((state) => state.login); // Get the login function from the store
+  const { login, setLoading: setAuthLoading } = useAuthStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
+    setAuthLoading(true);
 
     try {
-      // Why: Call our backend's login endpoint.
-      const response = await api.post('/auth/login', { email, password });
+      // Why: Call our backend's login endpoint using the new API service
+      const response = await authAPI.login(email, password);
       
-      // Why: Use the login function from our Zustand store to save the token and user.
-      login(response.data.token, response.data.data);
+      // Why: Use the login function from our Zustand store to save the token and user
+      login(response.token, response.user);
 
-      // Why: Redirect to the projects page after successful login.
-      navigate('/projects');
+      // Why: Show success message with role information
+      toast.success(`Welcome back! Logged in as ${response.user.role}.`);
+
+      // Why: Redirect based on user role
+      if (response.user.role === 'owner' || response.user.role === 'admin') {
+        navigate('/dashboard');
+      } else {
+        navigate('/projects');
+      }
     } catch (err: unknown) {
-      // Why: Handle API errors from the backend.
-      const message = (err as { response?: { data?: { message?: string } } })?.response?.data?.message || 'Login failed. Please check your credentials.';
+      // Why: Handle API errors using our centralized error handler
+      const message = handleAPIError(err);
       setError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
+      setAuthLoading(false);
     }
   };
 
@@ -50,6 +61,7 @@ const Login: React.FC = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
             className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+            placeholder="Enter your email"
           />
         </div>
         <div>
@@ -60,17 +72,33 @@ const Login: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
             className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+            placeholder="Enter your password"
           />
         </div>
-        {error && <p className="text-red-400 text-sm text-center">{error}</p>}
+        {error && (
+          <div className="bg-red-900/50 border border-red-600 text-red-300 px-4 py-3 rounded">
+            {error}
+          </div>
+        )}
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-teal-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-teal-700 transition-colors disabled:bg-gray-600"
+          className="w-full bg-teal-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-teal-700 transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed"
         >
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
+      <div className="mt-6 text-center">
+        <p className="text-gray-400">
+          Don't have an account?{' '}
+          <button
+            onClick={() => navigate('/register')}
+            className="text-teal-400 hover:text-teal-300 underline"
+          >
+            Register here
+          </button>
+        </p>
+      </div>
     </div>
   );
 };

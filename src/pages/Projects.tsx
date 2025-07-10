@@ -1,8 +1,10 @@
 // src/pages/Projects.tsx
-// Why: This component fetches and displays the list of projects from the API.
+// Why: This component fetches and displays the list of projects from the API with role-based features.
 
 import React, { useState, useEffect } from 'react';
-import api from '../api/axios';
+import { Link } from 'react-router-dom';
+import { projectAPI, handleAPIError } from '../api/services';
+import { useAuthStore } from '../store/authStore';
 import ProjectCard from '../components/ProjectCard';
 import type { Project } from '../types';
 
@@ -12,22 +14,28 @@ const Projects: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Why: useEffect is a React Hook that runs side effects (like data fetching).
-  // The empty dependency array `[]` ensures it runs only once on mount.
+  // Why: Get authentication state to show role-based features
+  const { canManageContent, user } = useAuthStore();
+
+  // Why: useEffect runs side effects like data fetching when component mounts
   useEffect(() => {
-    // Why: Define an async function to fetch data.
     const fetchProjects = async () => {
       try {
-        // Why: Use our pre-configured Axios instance to make the GET request.
-        const response = await api.get('/projects');
-        // Why: Update the state with the fetched data.
-        setProjects(response.data.data);
+        setLoading(true);
+        setError(null);
+        
+        // Why: Use our new API service to fetch projects
+        const response = await projectAPI.getAll();
+        
+        // Why: Update the state with the fetched data
+        setProjects(response.data || []);
       } catch (err) {
-        // Why: Catch any errors from the API call.
+        // Why: Handle API errors using our centralized error handler
         console.error('Failed to fetch projects:', err);
-        setError('Failed to load projects. Please try again later.');
+        const errorMessage = handleAPIError(err);
+        setError(errorMessage);
       } finally {
-        // Why: Set loading to false once the request is complete (success or fail).
+        // Why: Set loading to false once the request is complete
         setLoading(false);
       }
     };
@@ -35,28 +43,98 @@ const Projects: React.FC = () => {
     fetchProjects();
   }, []);
 
-  // Why: Conditional rendering based on the component's state.
+  // Why: Conditional rendering based on the component's state
   if (loading) {
-    return <p className="text-center text-lg text-gray-400">Loading projects...</p>;
+    return (
+      <div className="flex items-center justify-center min-h-64">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-400 mx-auto mb-4"></div>
+          <p className="text-lg text-gray-400">Loading projects...</p>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
-    return <p className="text-center text-lg text-red-400">{error}</p>;
-  }
-
-  if (projects.length === 0) {
-    return <p className="text-center text-lg text-gray-400">No projects found. Create one from the admin panel!</p>;
+    return (
+      <div className="text-center">
+        <div className="bg-red-900/50 border border-red-600 text-red-300 px-6 py-4 rounded-lg max-w-md mx-auto">
+          <h3 className="font-semibold mb-2">Error Loading Projects</h3>
+          <p>{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div>
-      <h1 className="text-4xl font-bold mb-8 text-center text-teal-300">My Portfolio Projects</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {/* Why: Map over the projects array and render a ProjectCard for each one. */}
-        {projects.map((project) => (
-          <ProjectCard key={project._id} project={project} />
-        ))}
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-4xl font-bold text-teal-300">Portfolio Projects</h1>
+          <p className="text-gray-400 mt-2">
+            {projects.length > 0 
+              ? `Showcasing ${projects.length} project${projects.length === 1 ? '' : 's'}`
+              : 'No projects available yet'
+            }
+          </p>
+        </div>
+        
+        {/* Why: Show create project button only for users who can manage content */}
+        {canManageContent() && (
+          <Link 
+            to="/dashboard"
+            className="bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition-colors font-semibold"
+          >
+            Manage Projects
+          </Link>
+        )}
       </div>
+
+      {projects.length === 0 ? (
+        <div className="text-center py-16">
+          <div className="max-w-md mx-auto">
+            <div className="text-6xl text-gray-600 mb-4">📂</div>
+            <h3 className="text-xl font-semibold text-gray-300 mb-2">No Projects Found</h3>
+            <p className="text-gray-400 mb-6">
+              {canManageContent() 
+                ? "Start building your portfolio by creating your first project!"
+                : "The portfolio owner hasn't added any projects yet."
+              }
+            </p>
+            {canManageContent() && (
+              <Link 
+                to="/dashboard"
+                className="bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition-colors inline-block font-semibold"
+              >
+                Create First Project
+              </Link>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Why: Map over the projects array and render a ProjectCard for each one */}
+          {projects.map((project) => (
+            <ProjectCard key={project._id} project={project} />
+          ))}
+        </div>
+      )}
+
+      {/* Why: Show user info for content managers */}
+      {canManageContent() && user && (
+        <div className="mt-12 p-4 bg-gray-800 border border-gray-700 rounded-lg">
+          <h3 className="text-lg font-semibold text-teal-300 mb-2">Content Management</h3>
+          <p className="text-gray-400">
+            You have <strong>{user.role}</strong> access and can manage portfolio content.
+          </p>
+        </div>
+      )}
     </div>
   );
 };

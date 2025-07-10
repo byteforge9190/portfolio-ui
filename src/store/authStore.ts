@@ -1,16 +1,24 @@
 // src/store/authStore.ts
 // Why: This Zustand store manages the global authentication state
-// (user data, token, authentication status).
+// with role-based access control integration
 
 import { create } from 'zustand';
+import type { User } from '../types';
 
 // Why: Define the shape of our authentication state.
 interface AuthState {
   token: string | null;
-  user: { email: string } | null;
+  user: User | null;
   isAuthenticated: boolean;
-  login: (token: string, user: { email: string }) => void;
+  isLoading: boolean;
+  login: (token: string, user: User) => void;
   logout: () => void;
+  setUser: (user: User) => void;
+  setLoading: (loading: boolean) => void;
+  hasRole: (requiredRoles: string[]) => boolean;
+  canManageContent: () => boolean;
+  isOwner: () => boolean;
+  isAdmin: () => boolean;
 }
 
 // Why: Helper function to safely access localStorage
@@ -21,29 +29,64 @@ const getStorageItem = (key: string): string | null => {
   return null;
 };
 
-// Why: Create the store. Zustand is simple and uses a hook-like API.
-export const useAuthStore = create<AuthState>((set) => ({
-  // Why: Initialize the state with values from localStorage.
-  // This allows the user to stay logged in across page reloads.
+// Why: Create the store with role-based access control
+export const useAuthStore = create<AuthState>((set, get) => ({
+  // Why: Initialize the state with values from localStorage
   token: getStorageItem('token'),
   user: getStorageItem('user') ? JSON.parse(getStorageItem('user')!) : null,
-  isAuthenticated: !!getStorageItem('token'), // Check if token exists
+  isAuthenticated: !!getStorageItem('token'),
+  isLoading: false,
 
-  // Why: The 'login' function updates the state and stores data in localStorage.
-  login: (token, user) => {
+  // Why: The 'login' function updates the state and stores data in localStorage
+  login: (token: string, user: User) => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
     }
-    set({ token, user, isAuthenticated: true });
+    set({ token, user, isAuthenticated: true, isLoading: false });
   },
 
-  // Why: The 'logout' function clears the state and localStorage.
+  // Why: The 'logout' function clears the state and localStorage
   logout: () => {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
     }
-    set({ token: null, user: null, isAuthenticated: false });
+    set({ token: null, user: null, isAuthenticated: false, isLoading: false });
+  },
+
+  // Why: Update user information (useful for profile updates)
+  setUser: (user: User) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('user', JSON.stringify(user));
+    }
+    set({ user });
+  },
+
+  // Why: Set loading state for authentication operations
+  setLoading: (loading: boolean) => set({ isLoading: loading }),
+
+  // Why: Check if user has any of the required roles
+  hasRole: (requiredRoles: string[]) => {
+    const { user } = get();
+    return user ? requiredRoles.includes(user.role) : false;
+  },
+
+  // Why: Check if user can manage content (owner or admin)
+  canManageContent: () => {
+    const { user } = get();
+    return user ? ['owner', 'admin'].includes(user.role) : false;
+  },
+
+  // Why: Check if user is the portfolio owner
+  isOwner: () => {
+    const { user } = get();
+    return user?.role === 'owner';
+  },
+
+  // Why: Check if user is an admin
+  isAdmin: () => {
+    const { user } = get();
+    return user?.role === 'admin';
   },
 }));

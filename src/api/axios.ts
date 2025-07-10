@@ -1,10 +1,10 @@
 // src/api/axios.ts
 // Why: This file creates a reusable Axios instance with a base URL and
-// an interceptor to attach the JWT for authenticated requests.
+// interceptors for authentication and error handling
 
 import axios from 'axios';
 
-const baseURL = import.meta.env.VITE_API_URL;
+const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api/v1';
 
 const api = axios.create({
   baseURL,
@@ -49,10 +49,18 @@ api.interceptors.response.use(
     // Handle 401 errors (unauthorized)
     if (error.response?.status === 401) {
       console.warn('Authentication failed - token may be expired');
-      // Optionally clear the token and redirect to login
-      // localStorage.removeItem('token');
-      // localStorage.removeItem('user');
-      // window.location.href = '/login';
+      // Clear invalid token and user data
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      // Redirect to login if not already there
+      if (window.location.pathname !== '/login' && window.location.pathname !== '/register') {
+        window.location.href = '/login';
+      }
+    }
+    
+    // Handle 403 errors (forbidden - insufficient permissions)
+    if (error.response?.status === 403) {
+      console.warn('Access forbidden - insufficient permissions');
     }
     
     return Promise.reject(error);
