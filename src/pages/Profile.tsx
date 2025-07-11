@@ -66,7 +66,19 @@ const ProfilePage: React.FC = () => {
   }
 
   // Display the first (most recent) profile
-  const profile = profiles[0];
+  const profile = profiles[length - 1]; // Assuming the latest profile is at the end
+
+  if (!profile) {
+    return (
+      <div className="text-center py-12">
+        <div className="bg-yellow-900/20 border border-yellow-700 rounded-lg p-6 max-w-md mx-auto">
+          <FaUser className="text-4xl text-yellow-400 mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-yellow-400 mb-2">No Profile Data Available</h2>
+          <p className="text-gray-300">Please create a profile from the dashboard.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto">
