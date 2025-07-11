@@ -10,7 +10,7 @@ import Skills from './pages/Skills';
 import Experience from './pages/Experience';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Dashboard from './pages/Dashboard'; // Import the Dashboard component
+import Dashboard from './pages/Dashboard'; 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -22,7 +22,7 @@ const App: React.FC = () => {
         <Header />
         <main className="container mx-auto p-8 flex-grow">
           <Routes>
-            <Route path="/" element={<Projects />} />
+            <Route path="/" element={<Projects />} /> 
             <Route path="/projects" element={<Projects />} />
             <Route path="/skills" element={<Skills />} />
             <Route path="/experience" element={<Experience />} />

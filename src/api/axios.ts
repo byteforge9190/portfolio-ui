@@ -4,13 +4,11 @@
 
 import axios from 'axios';
 
-const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api/v1';
+const baseURL = import.meta.env.VITE_API_URL;
 
 const api = axios.create({
   baseURL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  withCredentials: true, // only if your backend uses cookie-based auth
 });
 
 // Why: Add a request interceptor to automatically attach the token to headers.

@@ -4,10 +4,8 @@ import React, { useState } from 'react';
 import { useAuthStore } from '../store/authStore';
 import ProjectForm from '../components/ProjectForm';
 import ManageProjects from '../components/ManageProjects';
-import SkillForm from '../components/SkillForm'; // Import new components
-import ManageSkills from '../components/ManageSkills'; // Import new components
-import ExperienceForm from '../components/ExperienceForm'; // Import new components
-import ManageExperience from '../components/ManageExperience'; // Import new components
+import ManageSkills from '../components/ManageSkills'; 
+import ManageExperience from '../components/ManageExperience'; 
 
 const Dashboard: React.FC = () => {
   const { user } = useAuthStore();
