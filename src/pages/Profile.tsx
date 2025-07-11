@@ -17,7 +17,7 @@ const ProfilePage: React.FC = () => {
       try {
         setLoading(true);
         const response = await profileAPI.getAll();
-        setProfiles(response.data || []);
+        setProfile(response.data[0] || null); // Take the first profile from the array
         setError(null);
       } catch (err) {
         const errorMessage = handleAPIError(err);
