@@ -34,8 +34,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   // Why: Initialize the state with values from localStorage
   token: getStorageItem('token'),
 
-  user: getStorageItem('user') ? JSON.parse(getStorageItem('user')!) : null,
-  isAuthenticated: !!getStorageItem('token'),
   isLoading: false,
 
   user: (() => {
