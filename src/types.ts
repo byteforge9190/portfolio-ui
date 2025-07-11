@@ -1,5 +1,31 @@
 // src/types.ts
-// Why: Centralized type definitions to avoid duplication and ensure consistency.
+// Why: Centralized type definitions to match the backend API structure
+
+export interface User {
+  id: string;
+  email: string;
+  role: 'owner' | 'admin' | 'viewer';
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface AuthResponse {
+  status: string;
+  token: string;
+  user: User;
+}
+
+export interface ApiResponse<T> {
+  status: string;
+  data?: T;
+  count?: number;
+  pagination?: {
+    page: number;
+    limit: number;
+    pages: number;
+  };
+  message?: string;
+}
 
 export interface Project {
   _id: string;
@@ -8,7 +34,12 @@ export interface Project {
   technologies: string[];
   githubUrl?: string;
   liveUrl?: string;
-  user: { email: string };
+  user: {
+    _id: string;
+    email: string;
+  };
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Skill {
@@ -16,6 +47,12 @@ export interface Skill {
   name: string;
   proficiency: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
   category: 'Frontend' | 'Backend' | 'Database' | 'DevOps' | 'Tools';
+  user: {
+    _id: string;
+    email: string;
+  };
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface ExperienceItem {
@@ -23,7 +60,37 @@ export interface ExperienceItem {
   title: string;
   company: string;
   location?: string;
-  from: string; // Dates are strings from the API
+  from: string;
+  to?: string;
+  current: boolean;
+  description?: string;
+  user: {
+    _id: string;
+    email: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateProjectRequest {
+  title: string;
+  description: string;
+  technologies: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+}
+
+export interface CreateSkillRequest {
+  name: string;
+  proficiency: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
+  category: 'Frontend' | 'Backend' | 'Database' | 'DevOps' | 'Tools';
+}
+
+export interface CreateExperienceRequest {
+  title: string;
+  company: string;
+  location?: string;
+  from: string;
   to?: string;
   current: boolean;
   description?: string;

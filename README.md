@@ -1,69 +1,276 @@
-# React + TypeScript + Vite
+# Portfolio UI - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive portfolio frontend built with React, TypeScript, and Tailwind CSS. This application integrates seamlessly with the [my-portfolio-os backend](https://github.com/darunbjork/my-portfolio-os) to provide a complete portfolio management solution.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🔐 Authentication & Authorization
+- **Role-based access control** (Owner, Admin, Viewer)
+- **JWT token authentication**
+- **Automatic role assignment** (first user becomes owner)
+- **Protected routes** and components
 
-## Expanding the ESLint configuration
+### 📱 Modern UI/UX
+- **Responsive design** optimized for all devices
+- **Dark theme** with modern styling
+- **Interactive components** with smooth animations
+- **Toast notifications** for user feedback
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 🛠️ Content Management
+- **Dynamic project showcase** with CRUD operations
+- **Skills management** with proficiency levels
+- **Experience timeline** with company details
+- **Real-time updates** from backend API
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🚀 Developer Experience
+- **TypeScript** for type safety
+- **Zustand** for state management
+- **React Router** for navigation
+- **Axios** for API communication
+- **Tailwind CSS** for styling
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 🏗️ Architecture
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── api/           # API services and configuration
+├── components/    # Reusable UI components
+├── pages/         # Page components
+├── store/         # Zustand state management
+├── types/         # TypeScript type definitions
+└── App.tsx        # Main application component
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚀 Quick Start
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Node.js 16+ and npm
+- Backend API running ([setup guide](https://github.com/darunbjork/my-portfolio-os))
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd portfolio-ui
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your backend URL
+   ```
+
+4. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open in browser**
+   ```
+   http://localhost:5173
+   ```
+
+## ⚙️ Configuration
+
+### Environment Variables
+
+Create a `.env` file:
+
+```bash
+# Backend API URL
+VITE_API_URL=http://localhost:3000/api/v1
+
+# For production
+# VITE_API_URL=https://your-backend-domain.com/api/v1
 ```
+
+### Backend Integration
+
+This frontend is designed to work with the backend API that provides:
+
+- **User authentication** with role-based access
+- **Portfolio content APIs** (projects, skills, experience)
+- **User management** for owners
+- **Security middleware** for protected routes
+
+See [Backend Integration Guide](./docs/BACKEND_INTEGRATION.md) for detailed setup instructions.
+
+## 👥 User Roles
+
+### 🔑 Owner
+- **First registered user** automatically becomes owner
+- **Full administrative access** to all features
+- **User management** capabilities
+- **Content creation and modification**
+
+### 👨‍💼 Admin
+- **Content management** access
+- **Project, skills, and experience** CRUD operations
+- **Cannot manage user roles**
+
+### 👀 Viewer
+- **Read-only access** to portfolio content
+- **Default role** for new registrations
+- **Public portfolio viewing**
+
+## 🛠️ Available Scripts
+
+```bash
+# Development
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+
+# Code Quality
+npm run lint         # Run ESLint
+npm run type-check   # Run TypeScript checks
+```
+
+## 📦 Tech Stack
+
+- **React 19** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool
+- **Tailwind CSS** - Styling
+- **Zustand** - State management
+- **React Router** - Navigation
+- **Axios** - HTTP client
+- **React Toastify** - Notifications
+
+## 🎨 UI Components
+
+### Core Components
+- **Header** - Navigation with role-based features
+- **ProjectCard** - Project showcase component
+- **ProtectedRoute** - Role-based route protection
+- **Forms** - Project, skill, and experience management
+
+### Pages
+- **Projects** - Portfolio project showcase
+- **Skills** - Technical skills display
+- **Experience** - Professional experience timeline
+- **Dashboard** - Content management interface
+- **Auth** - Login and registration
+
+## 🔌 API Integration
+
+### Authentication Flow
+```typescript
+// Register new user
+const response = await authAPI.register(email, password)
+
+// Login user
+const response = await authAPI.login(email, password)
+
+// Store user data
+login(response.token, response.user)
+```
+
+### Content Management
+```typescript
+// Fetch projects
+const projects = await projectAPI.getAll()
+
+// Create project (requires owner/admin role)
+const newProject = await projectAPI.create(projectData)
+
+// Update project (requires owner/admin role)
+await projectAPI.update(id, updatedData)
+```
+
+## 🚀 Deployment
+
+### Frontend Deployment
+
+1. **Build the application**
+   ```bash
+   npm run build
+   ```
+
+2. **Deploy to hosting platform**
+   - Vercel, Netlify, or similar
+   - Configure environment variables
+   - Update API URL for production
+
+3. **Configure domain and SSL**
+
+### Backend Requirements
+
+Ensure your backend has:
+- ✅ CORS configured for your frontend domain
+- ✅ Environment variables properly set
+- ✅ Database connection established
+- ✅ JWT authentication configured
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**API Connection Failed**
+- Check `VITE_API_URL` in `.env`
+- Verify backend is running
+- Check browser console for CORS errors
+
+**Authentication Not Working**
+- Clear browser localStorage: `localStorage.clear()`
+- Check network tab for failed requests
+- Verify JWT token format
+
+**Role-Based Features Missing**
+- Refresh the page after login
+- Check user role in browser dev tools
+- Verify API response structure
+
+### TypeScript Issues
+
+If you encounter TypeScript or JSX errors:
+
+1. **Update dependencies**
+   ```bash
+   npm install -D @types/react @types/react-dom
+   ```
+
+2. **Check tsconfig.json**
+   ```json
+   {
+     "compilerOptions": {
+       "jsx": "react-jsx",
+       "moduleResolution": "node"
+     }
+   }
+   ```
+
+## 📚 Documentation
+
+- [Backend Integration Guide](./docs/BACKEND_INTEGRATION.md)
+- [API Reference](./docs/BACKEND_INTEGRATION.md#api-endpoints-reference)
+- [Component Documentation](./src/components/)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🙏 Acknowledgments
+
+- Built to integrate with [my-portfolio-os backend](https://github.com/darunbjork/my-portfolio-os)
+- Uses modern React and TypeScript best practices
+- Designed with security and scalability in mind
+
+---
+
+**Ready to showcase your portfolio?** Start by setting up the backend, then follow this guide to get your frontend running! 🚀
