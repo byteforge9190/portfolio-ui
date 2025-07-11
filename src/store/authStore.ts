@@ -26,7 +26,19 @@ export const useAuthStore = create<AuthState>((set) => ({
   // Why: Initialize the state with values from localStorage.
   // This allows the user to stay logged in across page reloads.
   token: getStorageItem('token'),
-  user: getStorageItem('user') ? JSON.parse(getStorageItem('user')!) : null,
+  user: (() => {
+    const userString = getStorageItem('user');
+    if (userString) {
+      try {
+        return JSON.parse(userString);
+      } catch (e) {
+        console.error("Error parsing user data from localStorage:", e);
+        localStorage.removeItem('user'); // Clear corrupted data
+        return null;
+      }
+    }
+    return null;
+  })(),
   isAuthenticated: !!getStorageItem('token'), // Check if token exists
 
   // Why: The 'login' function updates the state and stores data in localStorage.

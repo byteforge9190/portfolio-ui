@@ -22,6 +22,7 @@ const ManageExperience: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [editingExperience, setEditingExperience] = useState<ExperienceItem | null>(null);
+  const [isCreating, setIsCreating] = useState(false); // New state for creation form
 
   const fetchExperience = useCallback(async () => {
     setLoading(true);
@@ -40,7 +41,7 @@ const ManageExperience: React.FC = () => {
     fetchExperience();
   }, [fetchExperience]);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = useCallback(async (id: string) => {
     if (window.confirm('Are you sure you want to delete this experience item?')) {
       try {
         await api.delete(`/experience/${id}`);
@@ -51,15 +52,22 @@ const ManageExperience: React.FC = () => {
         toast.error('Failed to delete experience.');
       }
     }
-  };
+  }, [fetchExperience]);
 
-  const handleEdit = (item: ExperienceItem) => {
+  const handleEdit = useCallback((item: ExperienceItem) => {
+    setIsCreating(false); // Close create form if open
     setEditingExperience(item);
+  }, []);
+
+  const handleSuccess = () => { // Renamed from handleEditSuccess to be more general
+    setEditingExperience(null);
+    setIsCreating(false); // Close create form
+    fetchExperience();
   };
 
-  const handleEditSuccess = () => {
+  const handleCancel = () => { // New cancel handler
     setEditingExperience(null);
-    fetchExperience();
+    setIsCreating(false);
   };
 
   if (loading) {
@@ -70,14 +78,32 @@ const ManageExperience: React.FC = () => {
     return <p className="text-center text-red-400">{error}</p>;
   }
 
+  const isFormOpen = isCreating || editingExperience !== null; // Determine if any form is open
+
   return (
     <div className="space-y-8">
-      {editingExperience && (
-        <ExperienceForm experience={editingExperience} onSuccess={handleEditSuccess} onCancel={() => setEditingExperience(null)} />
+      <div className="flex justify-between items-center"> {/* New div for header and button */}
+        <h2 className="text-3xl font-bold text-white">Manage Experience</h2>
+        {!isFormOpen && ( // Only show button if no form is open
+          <button
+            onClick={() => setIsCreating(true)}
+            className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+          >
+            Add New Experience
+          </button>
+        )}
+      </div>
+
+      {isFormOpen && ( // Conditionally render the form
+        <ExperienceForm
+          experience={editingExperience || undefined}
+          onSuccess={handleSuccess}
+          onCancel={handleCancel}
+        />
       )}
 
-      {experience.length === 0 ? (
-        <p className="text-center text-gray-400">No experience items to manage.</p>
+      {experience.length === 0 && !isFormOpen ? ( // Adjust message if no items and no form open
+        <p className="text-center text-gray-400 mt-8">No experience items found. Click "Add New Experience" to get started.</p>
       ) : (
         <div className="grid grid-cols-1 gap-6">
           {experience.map((item) => (
@@ -90,13 +116,15 @@ const ManageExperience: React.FC = () => {
               <div className="flex space-x-3 mt-4 md:mt-0">
                 <button
                   onClick={() => handleEdit(item)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                  disabled={isFormOpen} // Disable buttons when form is open
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:bg-gray-500 disabled:cursor-not-allowed"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => handleDelete(item._id)}
-                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                  disabled={isFormOpen} // Disable buttons when form is open
+                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:bg-gray-500 disabled:cursor-not-allowed"
                 >
                   Delete
                 </button>

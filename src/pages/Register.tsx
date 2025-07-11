@@ -25,7 +25,7 @@ const Register: React.FC = () => {
       const response = await api.post('/auth/register', { email, password });
       
       // Why: If registration is successful, log the user in automatically.
-      login(response.data.token, { email });
+      login(response.data.token, response.data.data);
 
       // Why: Redirect to the projects page after successful registration.
       navigate('/projects');

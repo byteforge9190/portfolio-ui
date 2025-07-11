@@ -43,7 +43,7 @@ const ManageProjects: React.FC = () => {
     fetchProjects();
   }, [fetchProjects]);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = useCallback(async (id: string) => {
     if (window.confirm('Are you sure you want to delete this project?')) {
       try {
         // Why: Make the authenticated DELETE request.
@@ -68,11 +68,11 @@ const ManageProjects: React.FC = () => {
         toast.error(errorMessage);
       }
     }
-  };
+  }, [fetchProjects]);
 
-  const handleEdit = (project: Project) => {
+  const handleEdit = useCallback((project: Project) => {
     setEditingProject(project);
-  };
+  }, []);
 
   const handleEditSuccess = () => {
     setEditingProject(null); // Close the form
