@@ -33,9 +33,26 @@ const getStorageItem = (key: string): string | null => {
 export const useAuthStore = create<AuthState>((set, get) => ({
   // Why: Initialize the state with values from localStorage
   token: getStorageItem('token'),
+
   user: getStorageItem('user') ? JSON.parse(getStorageItem('user')!) : null,
   isAuthenticated: !!getStorageItem('token'),
   isLoading: false,
+
+  user: (() => {
+    const userString = getStorageItem('user');
+    if (userString) {
+      try {
+        return JSON.parse(userString);
+      } catch (e) {
+        console.error("Error parsing user data from localStorage:", e);
+        localStorage.removeItem('user'); // Clear corrupted data
+        return null;
+      }
+    }
+    return null;
+  })(),
+  isAuthenticated: !!getStorageItem('token'), // Check if token exists
+
 
   // Why: The 'login' function updates the state and stores data in localStorage
   login: (token: string, user: User) => {

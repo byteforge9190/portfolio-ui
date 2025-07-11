@@ -71,13 +71,11 @@ const Dashboard: React.FC = () => {
         )}
         {activeTab === 'skills' && (
           <div className="space-y-10">
-            <SkillForm onSuccess={handleRefresh} />
             <ManageSkills key={`skills-${refreshKey}`} />
           </div>
         )}
         {activeTab === 'experience' && (
           <div className="space-y-10">
-            <ExperienceForm onSuccess={handleRefresh} />
             <ManageExperience key={`experience-${refreshKey}`} />
           </div>
         )}

@@ -37,7 +37,7 @@ const ManageSkills: React.FC = () => {
     fetchSkills();
   }, [fetchSkills]);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = useCallback(async (id: string) => {
     if (window.confirm('Are you sure you want to delete this skill?')) {
       try {
         await api.delete(`/skills/${id}`);
@@ -48,12 +48,12 @@ const ManageSkills: React.FC = () => {
         toast.error('Failed to delete skill.');
       }
     }
-  };
+  }, [fetchSkills]);
 
-  const handleEdit = (skill: Skill) => {
+  const handleEdit = useCallback((skill: Skill) => {
     setIsCreating(false); // Close create form if open
     setEditingSkill(skill);
-  };
+  }, []);
 
   const handleSuccess = () => {
     setEditingSkill(null);
