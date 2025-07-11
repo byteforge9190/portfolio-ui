@@ -142,7 +142,7 @@ const ManageProfiles: React.FC = () => {
             <span>Create Profile</span>
           </button>
         </div>
-      ) : (
+      ) : Array.isArray(profiles) && profiles.length > 0 ? (
         /* Profiles Grid */
         <div className="grid gap-6">
           {profiles.map((profile) => (
@@ -254,6 +254,8 @@ const ManageProfiles: React.FC = () => {
             </div>
           ))}
         </div>
+      ) : (
+        <div className="text-gray-500">No profiles found.</div>
       )}
     </div>
   );
