@@ -9,9 +9,11 @@ import type {
   Project,
   Skill,
   ExperienceItem,
+  Profile,
   CreateProjectRequest,
   CreateSkillRequest,
   CreateExperienceRequest,
+  CreateProfileRequest,
 } from '../types';
 
 // =============================================================================
@@ -143,6 +145,42 @@ export const experienceAPI = {
   // Delete experience (Owner/Admin only)
   delete: async (id: string): Promise<void> => {
     await api.delete(`/experience/${id}`);
+  },
+};
+
+// =============================================================================
+// Profile Services
+// =============================================================================
+
+export const profileAPI = {
+  // Get all profiles (public)
+  getAll: async (queryParams?: string): Promise<ApiResponse<Profile[]>> => {
+    const url = queryParams ? `/profile?${queryParams}` : '/profile';
+    const response = await api.get(url);
+    return response.data;
+  },
+
+  // Get single profile by ID (public)
+  getById: async (id: string): Promise<ApiResponse<Profile>> => {
+    const response = await api.get(`/profile/${id}`);
+    return response.data;
+  },
+
+  // Create new profile (Owner/Admin only)
+  create: async (profileData: CreateProfileRequest): Promise<ApiResponse<Profile>> => {
+    const response = await api.post('/profile', profileData);
+    return response.data;
+  },
+
+  // Update profile (Owner/Admin only)
+  update: async (id: string, profileData: Partial<CreateProfileRequest>): Promise<ApiResponse<Profile>> => {
+    const response = await api.put(`/profile/${id}`, profileData);
+    return response.data;
+  },
+
+  // Delete profile (Owner/Admin only)
+  delete: async (id: string): Promise<void> => {
+    await api.delete(`/profile/${id}`);
   },
 };
 

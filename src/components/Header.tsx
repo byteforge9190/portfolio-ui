@@ -47,6 +47,9 @@ const Header: React.FC = () => {
           <Link to="/experience" className="text-gray-300 hover:text-teal-300 transition-colors">
             Experience
           </Link>
+          <Link to="/profile" className="text-gray-300 hover:text-teal-300 transition-colors">
+            Profile
+          </Link>
           {/* Show dashboard link only for users who can manage content */}
           {canManageContent() && (
             <Link to="/dashboard" className="text-gray-300 hover:text-teal-300 transition-colors">
@@ -103,6 +106,9 @@ const Header: React.FC = () => {
           </Link>
           <Link to="/experience" className="text-gray-300 hover:text-teal-300 transition-colors py-1">
             Experience
+          </Link>
+          <Link to="/profile" className="text-gray-300 hover:text-teal-300 transition-colors py-1">
+            Profile
           </Link>
           {canManageContent() && (
             <Link to="/dashboard" className="text-gray-300 hover:text-teal-300 transition-colors py-1">

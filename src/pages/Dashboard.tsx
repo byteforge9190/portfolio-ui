@@ -5,11 +5,12 @@ import { useAuthStore } from '../store/authStore';
 import ProjectForm from '../components/ProjectForm';
 import ManageProjects from '../components/ManageProjects';
 import ManageSkills from '../components/ManageSkills'; 
-import ManageExperience from '../components/ManageExperience'; 
+import ManageExperience from '../components/ManageExperience';
+import ManageProfiles from '../components/ManageProfiles';
 
 const Dashboard: React.FC = () => {
   const { user } = useAuthStore();
-  const [activeTab, setActiveTab] = useState<'projects' | 'skills' | 'experience'>('projects');
+  const [activeTab, setActiveTab] = useState<'projects' | 'skills' | 'experience' | 'profile'>('projects');
   
   // Why: State to force re-fetches after creation, update, or deletion.
   const [refreshKey, setRefreshKey] = useState(0); 
@@ -54,6 +55,14 @@ const Dashboard: React.FC = () => {
           >
             Experience
           </button>
+          <button
+            onClick={() => setActiveTab('profile')}
+            className={`px-6 py-3 rounded-lg font-bold transition-all ${
+              activeTab === 'profile' ? 'bg-teal-600 text-white shadow-lg' : 'bg-transparent text-gray-400 hover:bg-gray-700'
+            }`}
+          >
+            Profile
+          </button>
         </div>
       </div>
 
@@ -75,6 +84,11 @@ const Dashboard: React.FC = () => {
         {activeTab === 'experience' && (
           <div className="space-y-10">
             <ManageExperience key={`experience-${refreshKey}`} />
+          </div>
+        )}
+        {activeTab === 'profile' && (
+          <div className="space-y-10">
+            <ManageProfiles key={`profile-${refreshKey}`} />
           </div>
         )}
       </section>

@@ -72,6 +72,28 @@ export interface ExperienceItem {
   updatedAt: string;
 }
 
+export interface Profile {
+  _id: string;
+  fullName: string;
+  title: string;
+  summary: string;
+  bio?: string;
+  location?: string;
+  phone?: string;
+  email: string;
+  website?: string;
+  linkedinUrl?: string;
+  githubUrl?: string;
+  profileImageUrl?: string;
+  resumeUrl?: string;
+  user: {
+    _id: string;
+    email: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface CreateProjectRequest {
   title: string;
   description: string;
@@ -94,4 +116,19 @@ export interface CreateExperienceRequest {
   to?: string;
   current: boolean;
   description?: string;
+}
+
+export interface CreateProfileRequest {
+  fullName: string;
+  title: string;
+  summary: string;
+  bio?: string;
+  location?: string;
+  phone?: string;
+  email: string;
+  website?: string;
+  linkedinUrl?: string;
+  githubUrl?: string;
+  profileImageUrl?: string;
+  resumeUrl?: string;
 }

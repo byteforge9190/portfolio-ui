@@ -8,6 +8,7 @@ import ProtectedRoute from './components/ProtectedRoute'; // Import the protecte
 import Projects from './pages/Projects';
 import Skills from './pages/Skills';
 import Experience from './pages/Experience';
+import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard'; 
@@ -26,6 +27,7 @@ const App: React.FC = () => {
             <Route path="/projects" element={<Projects />} />
             <Route path="/skills" element={<Skills />} />
             <Route path="/experience" element={<Experience />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             {/* Why: Protect the dashboard route with our new component. */}
