@@ -8,16 +8,20 @@ import { toast } from 'react-toastify';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaGlobe, FaLinkedin, FaGithub, FaFileDownload, FaUser } from 'react-icons/fa';
 
 const ProfilePage: React.FC = () => {
-  const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [profile, setProfile] = useState<Profile | null>(null); // Changed to single Profile object
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchProfiles = async () => {
+    const fetchProfile = async () => { 
       try {
         setLoading(true);
         const response = await profileAPI.getAll();
-        setProfile(response.data[0] || null); // Take the first profile from the array
+        if (response.data && response.data.length > 0) {
+          setProfile(response.data[0]); // Take the first profile from the array
+        } else {
+          setProfile(null);
+        }
         setError(null);
       } catch (err) {
         const errorMessage = handleAPIError(err);
@@ -28,7 +32,7 @@ const ProfilePage: React.FC = () => {
       }
     };
 
-    fetchProfiles();
+    fetchProfile();
   }, []);
 
   if (loading) {
@@ -53,28 +57,13 @@ const ProfilePage: React.FC = () => {
     );
   }
 
-  if (profiles.length === 0) {
+  if (!profile) { // Check for single profile object
     return (
       <div className="text-center py-12">
         <div className="bg-yellow-900/20 border border-yellow-700 rounded-lg p-6 max-w-md mx-auto">
           <FaUser className="text-4xl text-yellow-400 mx-auto mb-4" />
           <h2 className="text-xl font-semibold text-yellow-400 mb-2">No Profile Found</h2>
-          <p className="text-gray-300">The portfolio owner hasn't set up their profile yet.</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Display the first (most recent) profile
-  const profile = profiles[length - 1]; // Assuming the latest profile is at the end
-
-  if (!profile) {
-    return (
-      <div className="text-center py-12">
-        <div className="bg-yellow-900/20 border border-yellow-700 rounded-lg p-6 max-w-md mx-auto">
-          <FaUser className="text-4xl text-yellow-400 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-yellow-400 mb-2">No Profile Data Available</h2>
-          <p className="text-gray-300">Please create a profile from the dashboard.</p>
+          <p className="text-gray-300">The portfolio owner hasn't set up their profile yet, or there was an issue fetching it.</p>
         </div>
       </div>
     );
