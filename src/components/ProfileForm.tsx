@@ -120,15 +120,26 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
     }
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.type === 'image/heic') {
+      try {
+        const convertedBlob = await heic2any({ blob: file, toType: 'image/jpeg' });
+        const jpegFile = new File([convertedBlob], 'converted.jpg', { type: 'image/jpeg' });
+        setSelectedImage(jpegFile);
+        setImagePreview(URL.createObjectURL(jpegFile));
+      } catch (error) {
+        toast.error("Failed to convert HEIC image. Please try another image.");
+      }
+    } else {
       setSelectedImage(file);
       setImagePreview(URL.createObjectURL(file));
-      // Clear any previous URL validation error for this field
-      if (errors.profileImageUrl) {
-        setErrors(prev => ({ ...prev, profileImageUrl: undefined }));
-      }
+    }
+    // Clear any previous URL validation error for this field
+    if (errors.profileImageUrl) {
+      setErrors(prev => ({ ...prev, profileImageUrl: undefined }));
     }
   };
 
