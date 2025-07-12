@@ -110,7 +110,7 @@ const Header: React.FC = () => {
           <Link to="/profile" className="text-gray-300 hover:text-teal-300 transition-colors py-1">
             Profile
           </Link>
-          {canManageContent() && (
+          {isOwner() && (
             <Link to="/dashboard" className="text-gray-300 hover:text-teal-300 transition-colors py-1">
               Dashboard
             </Link>
