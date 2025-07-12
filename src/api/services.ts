@@ -14,6 +14,7 @@ import type {
   CreateSkillRequest,
   CreateExperienceRequest,
   CreateProfileRequest,
+  ApiError,
 } from '../types';
 
 // =============================================================================
@@ -212,14 +213,6 @@ export const buildQueryString = (params: Record<string, string | number | boolea
   
   return searchParams.toString();
 };
-
-interface ApiError extends Error {
-  response?: {
-    data?: {
-      message?: string;
-    };
-  };
-}
 
 // Why: Helper function to handle API errors consistently
 export const handleAPIError = (error: ApiError): string => {

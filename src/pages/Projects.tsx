@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { projectAPI, handleAPIError } from '../api/services';
 import { useAuthStore } from '../store/authStore';
 import ProjectCard from '../components/ProjectCard';
-import type { Project } from '../types';
+import type { Project, ApiError } from '../types';
 
 const Projects: React.FC = () => {
   // Why: Use state to store the fetched projects and loading/error status.
@@ -29,10 +29,10 @@ const Projects: React.FC = () => {
         
         // Why: Update the state with the fetched data
         setProjects(response.data || []);
-      } catch (err) {
+      } catch (err: unknown) {
         // Why: Handle API errors using our centralized error handler
         console.error('Failed to fetch projects:', err);
-        const errorMessage = handleAPIError(err);
+        const errorMessage = handleAPIError(err as ApiError);
         setError(errorMessage);
       } finally {
         // Why: Set loading to false once the request is complete

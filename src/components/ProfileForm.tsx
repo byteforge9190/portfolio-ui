@@ -3,7 +3,8 @@
 
 import React, { useState } from 'react';
 import { profileAPI, handleAPIError } from '../api/services';
-import type { CreateProfileRequest, Profile } from '../types';
+import type { CreateProfileRequest, Profile, ApiError } from '../types';
+import heic2any from "heic2any";
 import { toast } from 'react-toastify';
 import { FaUser, FaSave, FaTimes } from 'react-icons/fa';
 
@@ -105,8 +106,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
       }
 
       onSuccess();
-    } catch (error) {
-      const errorMessage = handleAPIError(error);
+    } catch (error: unknown) {
+      const errorMessage = handleAPIError(error as ApiError);
       toast.error(`Failed to ${existingProfile ? 'update' : 'create'} profile: ${errorMessage}`);
     } finally {
       setLoading(false);
@@ -127,10 +128,10 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
     if (file.type === 'image/heic') {
       try {
         const convertedBlob = await heic2any({ blob: file, toType: 'image/jpeg' });
-        const jpegFile = new File([convertedBlob], 'converted.jpg', { type: 'image/jpeg' });
+        const jpegFile = new File([Array.isArray(convertedBlob) ? convertedBlob[0] : convertedBlob], 'converted.jpg', { type: 'image/jpeg' });
         setSelectedImage(jpegFile);
         setImagePreview(URL.createObjectURL(jpegFile));
-      } catch (error) {
+      } catch  {
         toast.error("Failed to convert HEIC image. Please try another image.");
       }
     } else {

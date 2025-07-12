@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { authAPI, handleAPIError } from '../api/services';
 import { toast } from 'react-toastify';
+import type { ApiError } from '../types';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -39,8 +40,7 @@ const Login: React.FC = () => {
         navigate('/projects');
       }
     } catch (err: unknown) {
-      // Why: Handle API errors using our centralized error handler
-      const message = handleAPIError(err);
+      const message = handleAPIError(err as ApiError);
       setError(message);
       toast.error(message);
     } finally {

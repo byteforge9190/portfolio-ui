@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { profileAPI, handleAPIError } from '../api/services';
-import type { Profile } from '../types';
+import type { Profile, ApiError } from '../types';
 import { toast } from 'react-toastify';
 import { FaEdit, FaTrash, FaPlus, FaUser, FaEye, FaLink } from 'react-icons/fa';
 import ProfileForm from './ProfileForm';
@@ -28,8 +28,8 @@ const ManageProfiles: React.FC<ManageProfilesProps> = ({ onSuccess }) => {
         setProfile(null);
       }
       setError(null);
-    } catch (err) {
-      const errorMessage = handleAPIError(err);
+    } catch (err: unknown) {
+      const errorMessage = handleAPIError(err as ApiError);
       setError(errorMessage);
       toast.error(`Failed to fetch profile: ${errorMessage}`);
     } finally {
@@ -55,8 +55,8 @@ const ManageProfiles: React.FC<ManageProfilesProps> = ({ onSuccess }) => {
       toast.success('Profile deleted successfully!');
       setProfile(null); // Clear profile from state
       setShowForm(false); // Hide form after deletion
-    } catch (error) {
-      const errorMessage = handleAPIError(error);
+    } catch (error: unknown) {
+      const errorMessage = handleAPIError(error as ApiError);
       toast.error(`Failed to delete profile: ${errorMessage}`);
     }
   };

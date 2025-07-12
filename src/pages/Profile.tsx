@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { profileAPI, handleAPIError } from '../api/services';
-import type { Profile } from '../types';
+import type { Profile, ApiError } from '../types';
 import { toast } from 'react-toastify';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaGlobe, FaLinkedin, FaGithub, FaFileDownload, FaUser } from 'react-icons/fa';
 
@@ -23,8 +23,8 @@ const ProfilePage: React.FC = () => {
           setProfile(null);
         }
         setError(null);
-      } catch (err) {
-        const errorMessage = handleAPIError(err);
+      } catch (err: unknown) {
+        const errorMessage = handleAPIError(err as ApiError);
         setError(errorMessage);
         toast.error(`Failed to load profile: ${errorMessage}`);
       } finally {

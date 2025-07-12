@@ -132,3 +132,13 @@ export interface CreateProfileRequest {
   profileImageUrl?: string;
   resumeUrl?: string;
 }
+
+export interface ApiError extends Error {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+}
+
+declare module 'heic2any';
