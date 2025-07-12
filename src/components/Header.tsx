@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 
 const Header: React.FC = () => {
-  const { isAuthenticated, user, logout, canManageContent } = useAuthStore();
+  const { isAuthenticated, user, logout, isOwner } = useAuthStore();
   const navigate = useNavigate();
 
   const handleLogout = () => {
