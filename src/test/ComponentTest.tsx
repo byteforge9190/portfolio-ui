@@ -26,7 +26,9 @@ const ComponentTest: React.FC = () => {
         technologies: ['React', 'TypeScript'],
         githubUrl: 'https://github.com/test',
         liveUrl: 'https://test.com',
-        user: { email: 'test@example.com' }
+        user: { _id: 'user-id', email: 'test@example.com' },
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
       // Use the mock project to verify the type works
       const isValidProject = mockProject._id && mockProject.title;
@@ -41,7 +43,10 @@ const ComponentTest: React.FC = () => {
         _id: 'skill-id',
         name: 'React',
         proficiency: 'Advanced',
-        category: 'Frontend'
+        category: 'Frontend',
+        user: { _id: 'user-id', email: 'test@example.com' },
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
       // Use the mock skill to verify the type works
       const isValidSkill = mockSkill._id && mockSkill.name && mockSkill.proficiency;
@@ -60,7 +65,10 @@ const ComponentTest: React.FC = () => {
         from: '2023-01-01',
         to: '2024-01-01',
         current: false,
-        description: 'Test description'
+        description: 'Test description',
+        user: { _id: 'user-id', email: 'test@example.com' },
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
       // Use the mock experience to verify the type works
       const isValidExperience = mockExperience._id && mockExperience.title && mockExperience.company;
@@ -72,7 +80,7 @@ const ComponentTest: React.FC = () => {
     // Test 4: Auth store functionality
     try {
       // Test login
-      login('test-token', { email: 'test@example.com' });
+      login('test-token', { id: 'user-id', email: 'test@example.com', role: 'admin' });
       const isLoggedIn = useAuthStore.getState().isAuthenticated;
       addResult('Auth store login', isLoggedIn);
       

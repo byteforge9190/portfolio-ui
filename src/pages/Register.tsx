@@ -43,17 +43,6 @@ const Register: React.FC = () => {
       // Why: If registration is successful, log the user in automatically
       login(response.token, response.user);
 
-      // Why: Show success message with role information
-      const roleMessage = response.user.role === 'owner' 
-        ? 'Congratulations! You are now the portfolio owner.' 
-        : `Registration successful! You have ${response.user.role} access.`;
-      
-
-      toast.success(roleMessage);
-
-      // Why: If registration is successful, log the user in automatically.
-      login(response.data.token, response.data.data);
-
 
       // Why: Redirect based on user role
       if (response.user.role === 'owner' || response.user.role === 'admin') {
