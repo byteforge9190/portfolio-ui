@@ -186,12 +186,8 @@ export const profileAPI = {
   // Upload profile image
   uploadImage: async (file: File): Promise<{ url: string; public_id: string }> => {
     const formData = new FormData();
-    formData.append('image', file);
-    const response = await api.post('/upload/profile-image', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    formData.append('file', file);
+    const response = await api.post('/upload/profile-image', formData);
     return response.data.data;
   },
 };
@@ -201,7 +197,7 @@ export const profileAPI = {
 // =============================================================================
 
 // Why: Helper function to build query strings for filtering, sorting, etc.
-export const buildQueryString = (params: Record<string, any>): string => {
+export const buildQueryString = (params: Record<string, string | number | boolean | string[]>): string => {
   const searchParams = new URLSearchParams();
   
   Object.entries(params).forEach(([key, value]) => {
@@ -217,8 +213,16 @@ export const buildQueryString = (params: Record<string, any>): string => {
   return searchParams.toString();
 };
 
+interface ApiError extends Error {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+}
+
 // Why: Helper function to handle API errors consistently
-export const handleAPIError = (error: any): string => {
+export const handleAPIError = (error: ApiError): string => {
   if (error.response?.data?.message) {
     return error.response.data.message;
   }

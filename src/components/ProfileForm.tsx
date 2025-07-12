@@ -263,7 +263,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
             {renderFileInput(
               'profileImageUrl',
               'Profile Image',
-              'image/*',
+              'image/png, image/jpeg',
               imagePreview,
               handleImageChange,
               errors
