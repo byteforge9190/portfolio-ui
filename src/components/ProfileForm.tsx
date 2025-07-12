@@ -29,8 +29,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
     resumeUrl: existingProfile?.resumeUrl || '',
   });
 
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<Partial<CreateProfileRequest>>({});
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(existingProfile?.profileImageUrl || null);
 
   const validateForm = (): boolean => {
     const newErrors: Partial<CreateProfileRequest> = {};
@@ -54,7 +54,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
     }
 
     // Validate URLs if provided
-    const urlFields: (keyof CreateProfileRequest)[] = ['website', 'linkedinUrl', 'githubUrl', 'profileImageUrl', 'resumeUrl'];
+    const urlFields: (keyof CreateProfileRequest)[] = ['website', 'linkedinUrl', 'githubUrl', 'resumeUrl']; // profileImageUrl removed from here
     urlFields.forEach(field => {
       const value = formData[field] as string;
       if (value && value.trim() && !value.match(/^https?:\/\/.+/)) {
@@ -76,12 +76,23 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
     setLoading(true);
 
     try {
+      let finalProfileImageUrl = formData.profileImageUrl; // Start with existing URL or empty
+
+      if (selectedImage) {
+        // Upload image to Cloudinary
+        const uploadResponse = await profileAPI.uploadImage(selectedImage);
+        finalProfileImageUrl = uploadResponse.url; // Get the URL from the upload response
+      }
+
       const cleanedData = Object.fromEntries(
         Object.entries(formData).map(([key, value]) => [
           key,
           typeof value === 'string' ? value.trim() : value
         ])
       ) as CreateProfileRequest;
+
+      // Update formData with the new image URL before submitting the profile
+      cleanedData.profileImageUrl = finalProfileImageUrl;
 
       if (existingProfile) {
         await profileAPI.update(cleanedData);
@@ -104,6 +115,18 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
     setFormData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setSelectedImage(file);
+      setImagePreview(URL.createObjectURL(file));
+      // Clear any previous URL validation error for this field
+      if (errors.profileImageUrl) {
+        setErrors(prev => ({ ...prev, profileImageUrl: undefined }));
+      }
     }
   };
 
@@ -157,6 +180,39 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
     </div>
   );
 
+  const renderFileInput = (
+    field: keyof CreateProfileRequest,
+    label: string,
+    accept: string,
+    currentPreview: string | null,
+    handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  ) => (
+    <div>
+      <label className="block text-sm font-medium text-gray-300 mb-2">
+        {label}
+      </label>
+      <input
+        type="file"
+        accept={accept}
+        onChange={handleFileChange}
+        className={`w-full text-white bg-gray-700 border ${errors[field] ? 'border-red-500' : 'border-gray-600'} rounded-lg p-2 focus:outline-none focus:border-teal-500 transition-colors`}
+        disabled={loading}
+      />
+      {currentPreview && (
+        <div className="mt-3">
+          {field === 'profileImageUrl' ? (
+            <img src={currentPreview} alt="Preview" className="w-24 h-24 object-cover rounded-full border border-gray-600" />
+          ) : (
+            <a href={currentPreview} target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:underline">
+              View Current File
+            </a>
+          )}
+        </div>
+      )}
+      {errors[field] && <p className="text-red-400 text-sm mt-1">{errors[field]}</p>}
+    </div>
+  );
+
   return (
     <div className="bg-gray-800 p-6 rounded-lg border border-gray-700">
       <div className="flex items-center mb-6">
@@ -199,7 +255,13 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
         <div className="border-t border-gray-700 pt-6">
           <h4 className="text-lg font-semibold text-gray-300 mb-4">Media & Documents</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {renderInput('profileImageUrl', 'Profile Image URL', 'url', false, 'https://example.com/profile.jpg')}
+            {renderFileInput(
+              'profileImageUrl',
+              'Profile Image',
+              'image/*',
+              imagePreview,
+              handleImageChange
+            )}
             {renderInput('resumeUrl', 'Resume URL', 'url', false, 'https://example.com/resume.pdf')}
           </div>
         </div>

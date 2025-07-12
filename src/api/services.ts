@@ -182,6 +182,18 @@ export const profileAPI = {
   delete: async (id: string): Promise<void> => {
     await api.delete(`/profile/${id}`);
   },
+
+  // Upload profile image
+  uploadImage: async (file: File): Promise<{ url: string; public_id: string }> => {
+    const formData = new FormData();
+    formData.append('profileImage', file);
+    const response = await api.post('/upload/profile-image', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data.data;
+  },
 };
 
 // =============================================================================
