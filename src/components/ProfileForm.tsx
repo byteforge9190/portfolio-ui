@@ -135,7 +135,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
     label: string,
     type: string = 'text',
     required: boolean = false,
-    placeholder?: string
+    placeholder?: string,
+    errors: Partial<CreateProfileRequest> // Added errors parameter
   ) => (
     <div>
       <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -160,7 +161,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
     label: string,
     required: boolean = false,
     placeholder?: string,
-    rows: number = 4
+    rows: number = 4,
+    errors: Partial<CreateProfileRequest> // Added errors parameter
   ) => (
     <div>
       <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -185,7 +187,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
     label: string,
     accept: string,
     currentPreview: string | null,
-    handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    errors: Partial<CreateProfileRequest> // Added errors parameter
   ) => (
     <div>
       <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -225,20 +228,20 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Basic Information */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {renderInput('fullName', 'Full Name', 'text', true, 'John Doe')}
-          {renderInput('title', 'Professional Title', 'text', true, 'Software Developer')}
+          {renderInput('fullName', 'Full Name', 'text', true, 'John Doe', errors)}
+          {renderInput('title', 'Professional Title', 'text', true, 'Software Developer', errors)}
         </div>
 
-        {renderTextarea('summary', 'Professional Summary', true, 'Brief professional summary...', 3)}
+        {renderTextarea('summary', 'Professional Summary', true, 'Brief professional summary...', 3, errors)}
 
         {/* Contact Information */}
         <div className="border-t border-gray-700 pt-6">
           <h4 className="text-lg font-semibold text-gray-300 mb-4">Contact Information</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {renderInput('email', 'Email', 'email', true, 'john@example.com')}
-            {renderInput('phone', 'Phone Number', 'tel', false, '+1 (555) 123-4567')}
-            {renderInput('location', 'Location', 'text', false, 'New York, NY')}
-            {renderInput('website', 'Personal Website', 'url', false, 'https://johndoe.com')}
+            {renderInput('email', 'Email', 'email', true, 'john@example.com', errors)}
+            {renderInput('phone', 'Phone Number', 'tel', false, '+1 (555) 123-4567', errors)}
+            {renderInput('location', 'Location', 'text', false, 'New York, NY', errors)}
+            {renderInput('website', 'Personal Website', 'url', false, 'https://johndoe.com', errors)}
           </div>
         </div>
 
@@ -246,8 +249,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
         <div className="border-t border-gray-700 pt-6">
           <h4 className="text-lg font-semibold text-gray-300 mb-4">Social Links</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {renderInput('linkedinUrl', 'LinkedIn URL', 'url', false, 'https://linkedin.com/in/johndoe')}
-            {renderInput('githubUrl', 'GitHub URL', 'url', false, 'https://github.com/johndoe')}
+            {renderInput('linkedinUrl', 'LinkedIn URL', 'url', false, 'https://linkedin.com/in/johndoe', errors)}
+            {renderInput('githubUrl', 'GitHub URL', 'url', false, 'https://github.com/johndoe', errors)}
           </div>
         </div>
 
@@ -260,15 +263,16 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
               'Profile Image',
               'image/*',
               imagePreview,
-              handleImageChange
+              handleImageChange,
+              errors
             )}
-            {renderInput('resumeUrl', 'Resume URL', 'url', false, 'https://example.com/resume.pdf')}
+            {renderInput('resumeUrl', 'Resume URL', 'url', false, 'https://example.com/resume.pdf', errors)}
           </div>
         </div>
 
         {/* Bio */}
         <div className="border-t border-gray-700 pt-6">
-          {renderTextarea('bio', 'About Me / Bio', false, 'Tell your story, background, interests...', 6)}
+          {renderTextarea('bio', 'About Me / Bio', false, 'Tell your story, background, interests...', 6, errors)}
         </div>
 
         {/* Form Actions */}
