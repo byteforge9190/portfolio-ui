@@ -173,8 +173,8 @@ export const profileAPI = {
   },
 
   // Update profile (Owner/Admin only)
-  update: async (id: string, profileData: Partial<CreateProfileRequest>): Promise<ApiResponse<Profile>> => {
-    const response = await api.put(`/profile/${id}`, profileData);
+  update: async (profileData: Partial<CreateProfileRequest>): Promise<ApiResponse<Profile>> => {
+    const response = await api.put('/profile', profileData);
     return response.data;
   },
 

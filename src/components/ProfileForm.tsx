@@ -84,7 +84,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
       ) as CreateProfileRequest;
 
       if (existingProfile) {
-        await profileAPI.update(existingProfile._id, cleanedData);
+        await profileAPI.update(cleanedData);
         toast.success('Profile updated successfully!');
       } else {
         await profileAPI.create(cleanedData);
