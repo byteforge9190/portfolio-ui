@@ -51,7 +51,7 @@ const Header: React.FC = () => {
             Profile
           </Link>
           {/* Show dashboard link only for users who can manage content */}
-          {canManageContent() && (
+          {isOwner() && (
             <Link to="/dashboard" className="text-gray-300 hover:text-teal-300 transition-colors">
               Dashboard
             </Link>
