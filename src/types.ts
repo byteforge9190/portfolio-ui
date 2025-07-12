@@ -34,6 +34,7 @@ export interface Project {
   technologies: string[];
   githubUrl?: string;
   liveUrl?: string;
+  imageUrl?: string;
   user: {
     _id: string;
     email: string;
@@ -100,6 +101,7 @@ export interface CreateProjectRequest {
   technologies: string[];
   githubUrl?: string;
   liveUrl?: string;
+  imageUrl?: string;
 }
 
 export interface CreateSkillRequest {

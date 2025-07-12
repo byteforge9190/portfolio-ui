@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
 import { toast } from 'react-toastify';
 import type { Project } from '../types';
+import { projectAPI } from '../api/services'; // Import projectAPI
 
 interface ProjectFormProps {
   project?: Project; // Optional prop for updating an existing project
@@ -19,7 +20,9 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, onSuccess, onCancel 
     technologies: '',
     githubUrl: '',
     liveUrl: '',
+    imageUrl: '', // Add imageUrl to formData
   });
+  const [imageFile, setImageFile] = useState<File | null>(null); // State for the selected image file
   const [loading, setLoading] = useState(false);
 
   // Why: Populate the form with project data if we are in 'update' mode.
@@ -31,6 +34,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, onSuccess, onCancel 
         technologies: project.technologies.join(', '), // Join array back to string
         githubUrl: project.githubUrl || '',
         liveUrl: project.liveUrl || '',
+        imageUrl: project.imageUrl || '', // Populate imageUrl if exists
       });
     }
   }, [project]);
@@ -39,13 +43,37 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, onSuccess, onCancel 
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+    } else {
+      setImageFile(null);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
+      let imageUrl = formData.imageUrl; // Use existing imageUrl by default
+
+      if (imageFile) {
+        try {
+          const uploadResponse = await projectAPI.uploadProjectImage(imageFile);
+          imageUrl = uploadResponse.url; // Get the URL from the upload response
+          toast.success('Image uploaded successfully!');
+        } catch (uploadError) {
+          console.error('Error uploading image:', uploadError);
+          toast.error('Failed to upload image. Please try again.');
+          setLoading(false);
+          return; // Stop submission if image upload fails
+        }
+      }
+
       const payload = {
         ...formData,
         technologies: formData.technologies.split(',').map((tech) => tech.trim()).filter(tech => tech), // Split and clean
+        imageUrl: imageUrl, // Include the imageUrl in the payload
       };
       
       if (project) {
@@ -59,7 +87,8 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, onSuccess, onCancel 
       }
       onSuccess(); // Call the callback to refresh the list or close the form
       if (!project) { // Clear form only on creation
-        setFormData({ title: '', description: '', technologies: '', githubUrl: '', liveUrl: '' });
+        setFormData({ title: '', description: '', technologies: '', githubUrl: '', liveUrl: '', imageUrl: '' });
+        setImageFile(null);
       }
     } catch (err: unknown) {
       console.error('Error submitting project form:', err);
@@ -149,6 +178,22 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, onSuccess, onCancel 
             onChange={handleChange}
             className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
+        </div>
+        <div>
+          <label className="block text-gray-400 mb-2">Project Image</label>
+          <input
+            type="file"
+            name="projectImage"
+            accept="image/jpeg,image/png,image/gif"
+            onChange={handleImageChange}
+            className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100"
+          />
+          {formData.imageUrl && (
+            <div className="mt-4">
+              <p className="block text-gray-400 mb-2">Current Image:</p>
+              <img src={formData.imageUrl} alt="Project Thumbnail" className="max-w-xs h-auto rounded-lg shadow-md" />
+            </div>
+          )}
         </div>
         <div className="flex gap-4">
             <button

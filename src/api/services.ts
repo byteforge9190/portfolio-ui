@@ -87,6 +87,18 @@ export const projectAPI = {
   delete: async (id: string): Promise<void> => {
     await api.delete(`/projects/${id}`);
   },
+
+  // Upload project image
+  uploadProjectImage: async (file: File): Promise<{ url: string }> => {
+    const formData = new FormData();
+    formData.append('projectImage', file);
+    const response = await api.post('/upload/project-image', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
 };
 
 // =============================================================================
