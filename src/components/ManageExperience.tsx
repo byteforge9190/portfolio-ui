@@ -17,7 +17,11 @@ interface ExperienceItem {
   description?: string;
 }
 
-const ManageExperience: React.FC = () => {
+interface ManageExperienceProps {
+  onSuccess: () => void;
+}
+
+const ManageExperience: React.FC<ManageExperienceProps> = ({ onSuccess }) => {
   const [experience, setExperience] = useState<ExperienceItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -63,6 +67,7 @@ const ManageExperience: React.FC = () => {
     setEditingExperience(null);
     setIsCreating(false); // Close create form
     fetchExperience();
+    onSuccess();
   };
 
   const handleCancel = () => { // New cancel handler

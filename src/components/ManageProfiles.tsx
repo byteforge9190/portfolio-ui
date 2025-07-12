@@ -8,7 +8,11 @@ import { toast } from 'react-toastify';
 import { FaEdit, FaTrash, FaPlus, FaUser, FaEye, FaLink } from 'react-icons/fa';
 import ProfileForm from './ProfileForm';
 
-const ManageProfiles: React.FC = () => {
+interface ManageProfilesProps {
+  onSuccess: () => void;
+}
+
+const ManageProfiles: React.FC<ManageProfilesProps> = ({ onSuccess }) => {
   const [profile, setProfile] = useState<Profile | null>(null); // Changed to single Profile object
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -60,6 +64,7 @@ const ManageProfiles: React.FC = () => {
   const handleFormSuccess = async () => {
     setShowForm(false);
     await fetchProfile(); // Re-fetch to get updated/new profile
+    onSuccess();
   };
 
   const handleFormCancel = () => {

@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { useAuthStore } from '../store/authStore';
-import ProjectForm from '../components/ProjectForm';
 import ManageProjects from '../components/ManageProjects';
 import ManageSkills from '../components/ManageSkills'; 
 import ManageExperience from '../components/ManageExperience';
@@ -11,10 +10,9 @@ import ManageProfiles from '../components/ManageProfiles';
 const Dashboard: React.FC = () => {
   const { user } = useAuthStore();
   const [activeTab, setActiveTab] = useState<'projects' | 'skills' | 'experience' | 'profile'>('projects');
-  
-  // Why: State to force re-fetches after creation, update, or deletion.
-  const [refreshKey, setRefreshKey] = useState(0); 
-  const handleRefresh = () => {
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const handleSuccess = () => {
     setRefreshKey(prevKey => prevKey + 1);
   };
 
@@ -72,23 +70,22 @@ const Dashboard: React.FC = () => {
         </h2>
         {activeTab === 'projects' && (
           <div className="space-y-10">
-            <ProjectForm onSuccess={handleRefresh} />
-            <ManageProjects key={`projects-${refreshKey}`} />
+            <ManageProjects key={`projects-${refreshKey}`} onSuccess={handleSuccess} />
           </div>
         )}
         {activeTab === 'skills' && (
           <div className="space-y-10">
-            <ManageSkills key={`skills-${refreshKey}`} />
+            <ManageSkills key={`skills-${refreshKey}`} onSuccess={handleSuccess} />
           </div>
         )}
         {activeTab === 'experience' && (
           <div className="space-y-10">
-            <ManageExperience key={`experience-${refreshKey}`} />
+            <ManageExperience key={`experience-${refreshKey}`} onSuccess={handleSuccess} />
           </div>
         )}
         {activeTab === 'profile' && (
           <div className="space-y-10">
-            <ManageProfiles key={`profile-${refreshKey}`} />
+            <ManageProfiles key={`profile-${refreshKey}`} onSuccess={handleSuccess} />
           </div>
         )}
       </section>

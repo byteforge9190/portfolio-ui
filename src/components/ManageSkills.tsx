@@ -13,7 +13,11 @@ interface Skill {
   category: 'Frontend' | 'Backend' | 'Database' | 'DevOps' | 'Tools';
 }
 
-const ManageSkills: React.FC = () => {
+interface ManageSkillsProps {
+  onSuccess: () => void;
+}
+
+const ManageSkills: React.FC<ManageSkillsProps> = ({ onSuccess }) => {
   const [skills, setSkills] = useState<Skill[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -59,6 +63,7 @@ const ManageSkills: React.FC = () => {
     setEditingSkill(null);
     setIsCreating(false);
     fetchSkills();
+    onSuccess();
   };
 
   const handleCancel = () => {

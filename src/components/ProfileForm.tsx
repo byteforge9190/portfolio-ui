@@ -14,6 +14,8 @@ interface ProfileFormProps {
 }
 
 const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, onCancel }) => {
+  const [errors, setErrors] = useState<Partial<CreateProfileRequest>>({});
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<CreateProfileRequest>({
     fullName: existingProfile?.fullName || '',
     title: existingProfile?.title || '',
@@ -49,7 +51,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
 
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email address';
     }
 
@@ -133,10 +135,10 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
   const renderInput = (
     field: keyof CreateProfileRequest,
     label: string,
+    errors: Partial<CreateProfileRequest>,
     type: string = 'text',
     required: boolean = false,
-    placeholder?: string,
-    errors: Partial<CreateProfileRequest> // Added errors parameter
+    placeholder?: string
   ) => (
     <div>
       <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -159,10 +161,10 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
   const renderTextarea = (
     field: keyof CreateProfileRequest,
     label: string,
+    errors: Partial<CreateProfileRequest>,
     required: boolean = false,
     placeholder?: string,
-    rows: number = 4,
-    errors: Partial<CreateProfileRequest> // Added errors parameter
+    rows: number = 4
   ) => (
     <div>
       <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -188,7 +190,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
     accept: string,
     currentPreview: string | null,
     handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    errors: Partial<CreateProfileRequest> // Added errors parameter
+    errors: Partial<CreateProfileRequest>
   ) => (
     <div>
       <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -228,20 +230,20 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Basic Information */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {renderInput('fullName', 'Full Name', 'text', true, 'John Doe', errors)}
-          {renderInput('title', 'Professional Title', 'text', true, 'Software Developer', errors)}
+          {renderInput('fullName', 'Full Name', errors, 'text', true, 'John Doe')}
+          {renderInput('title', 'Professional Title', errors, 'text', true, 'Software Developer')}
         </div>
 
-        {renderTextarea('summary', 'Professional Summary', true, 'Brief professional summary...', 3, errors)}
+        {renderTextarea('summary', 'Professional Summary', errors, true, 'Brief professional summary...', 3)}
 
         {/* Contact Information */}
         <div className="border-t border-gray-700 pt-6">
           <h4 className="text-lg font-semibold text-gray-300 mb-4">Contact Information</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {renderInput('email', 'Email', 'email', true, 'john@example.com', errors)}
-            {renderInput('phone', 'Phone Number', 'tel', false, '+1 (555) 123-4567', errors)}
-            {renderInput('location', 'Location', 'text', false, 'New York, NY', errors)}
-            {renderInput('website', 'Personal Website', 'url', false, 'https://johndoe.com', errors)}
+            {renderInput('email', 'Email', errors, 'email', true, 'john@example.com')}
+            {renderInput('phone', 'Phone Number', errors, 'tel', false, '+1 (555) 123-4567')}
+            {renderInput('location', 'Location', errors, 'text', false, 'New York, NY')}
+            {renderInput('website', 'Personal Website', errors, 'url', false, 'https://johndoe.com')}
           </div>
         </div>
 
@@ -249,8 +251,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
         <div className="border-t border-gray-700 pt-6">
           <h4 className="text-lg font-semibold text-gray-300 mb-4">Social Links</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {renderInput('linkedinUrl', 'LinkedIn URL', 'url', false, 'https://linkedin.com/in/johndoe', errors)}
-            {renderInput('githubUrl', 'GitHub URL', 'url', false, 'https://github.com/johndoe', errors)}
+            {renderInput('linkedinUrl', 'LinkedIn URL', errors, 'url', false, 'https://linkedin.com/in/johndoe')}
+            {renderInput('githubUrl', 'GitHub URL', errors, 'url', false, 'https://github.com/johndoe')}
           </div>
         </div>
 
@@ -266,13 +268,13 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
               handleImageChange,
               errors
             )}
-            {renderInput('resumeUrl', 'Resume URL', 'url', false, 'https://example.com/resume.pdf', errors)}
+            {renderInput('resumeUrl', 'Resume URL', errors, 'url', false, 'https://example.com/resume.pdf')}
           </div>
         </div>
 
         {/* Bio */}
         <div className="border-t border-gray-700 pt-6">
-          {renderTextarea('bio', 'About Me / Bio', false, 'Tell your story, background, interests...', 6, errors)}
+          {renderTextarea('bio', 'About Me / Bio', errors, false, 'Tell your story, background, interests...', 6)}
         </div>
 
         {/* Form Actions */}
