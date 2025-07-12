@@ -189,7 +189,7 @@ export const profileAPI = {
     const formData = new FormData();
     formData.append('profileImage', file);
     const response = await api.post('/upload/profile-image', formData);
-    return response.data.data;
+    return response.data.url;
   },
 };
 
