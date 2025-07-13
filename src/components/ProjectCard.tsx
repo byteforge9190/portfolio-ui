@@ -13,6 +13,17 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     <div className="bg-gray-800 rounded-lg shadow-2xl overflow-hidden transform transition-transform hover:scale-105 duration-300">
       <div className="p-6">
         <h2 className="text-3xl font-bold text-teal-300 mb-2">{project.title}</h2>
+        {project.imageUrl && (
+          <img 
+            src={project.imageUrl} 
+            alt={project.title}
+            className="w-full h-48 object-cover"
+            onError={(e) => {
+              e.currentTarget.onerror = null; 
+              e.currentTarget.src = '/placeholder.jpg';
+            }}
+          />
+        )}
         {/* Why: Display the user's email from the populated 'user' field. */}
         <p className="text-sm text-gray-500 mb-4">By: {project.user?.email || 'N/A'}</p>
         <p className="text-gray-300 mb-4 overflow-hidden" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}>{project.description}</p>

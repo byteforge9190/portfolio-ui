@@ -162,17 +162,15 @@ const ManageProfiles: React.FC<ManageProfilesProps> = ({ onSuccess }) => {
             {/* Profile Info */}
             <div className="flex-1">
               <div className="flex items-center mb-3">
-                {profile.profileImageUrl ? (
-                  <img
-                    src={profile.profileImageUrl}
-                    alt={profile.fullName}
-                    className="w-12 h-12 rounded-full object-cover mr-4 border-2 border-gray-600"
-                  />
-                ) : (
-                  <div className="w-12 h-12 rounded-full bg-gray-600 flex items-center justify-center mr-4 border-2 border-gray-600">
-                    <FaUser className="text-gray-400" />
-                  </div>
-                )}
+                <img
+                  src={profile.profileImage || '/default-profile.png'}
+                  alt={profile.fullName}
+                  className="w-12 h-12 rounded-full object-cover mr-4 border-2 border-gray-600"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = '/default-profile.png';
+                  }}
+                />
                 <div>
                   <h4 className="text-xl font-semibold text-white">{profile.fullName}</h4>
                   <p className="text-teal-300">{profile.title}</p>

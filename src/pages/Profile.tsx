@@ -75,17 +75,15 @@ const ProfilePage: React.FC = () => {
         {/* Header Section */}
         <div className="bg-gradient-to-r from-teal-600 to-teal-800 px-8 py-12 text-center">
           <div className="mb-6">
-            {profile.profileImageUrl ? (
-              <img
-                src={profile.profileImageUrl}
-                alt={profile.fullName}
-                className="w-32 h-32 rounded-full mx-auto border-4 border-white shadow-lg object-cover"
-              />
-            ) : (
-              <div className="w-32 h-32 rounded-full mx-auto border-4 border-white shadow-lg bg-gray-600 flex items-center justify-center">
-                <FaUser className="text-4xl text-gray-300" />
-              </div>
-            )}
+            <img
+              src={profile.profileImage || '/default-profile.png'}
+              alt="Profile"
+              className="w-28 h-28 rounded-full border-4 border-white object-cover"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = '/default-profile.png';
+              }}
+            />
           </div>
           <h1 className="text-4xl font-bold text-white mb-2">{profile.fullName}</h1>
           <p className="text-xl text-teal-100 mb-4">{profile.title}</p>
