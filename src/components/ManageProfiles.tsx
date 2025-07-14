@@ -163,7 +163,7 @@ const ManageProfiles: React.FC<ManageProfilesProps> = ({ onSuccess }) => {
             <div className="flex-1">
               <div className="flex items-center mb-3">
                 <img
-                  src={profile.profileImage || '/default-profile.png'}
+                  src={profile.profileImageUrl || '/default-profile.png'}
                   alt={profile.fullName}
                   className="w-12 h-12 rounded-full object-cover mr-4 border-2 border-gray-600"
                   onError={(e) => {

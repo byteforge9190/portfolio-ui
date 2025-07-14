@@ -76,9 +76,9 @@ const ProfilePage: React.FC = () => {
         <div className="bg-gradient-to-r from-teal-600 to-teal-800 px-8 py-12 text-center">
           <div className="mb-6">
             <img
-              src={profile.profileImage || '/default-profile.png'}
+              src={profile.profileImageUrl || '/default-profile.png'}
               alt="Profile"
-              className="w-28 h-28 rounded-full border-4 border-white object-cover"
+              className="w-64 h-64 rounded-full border-4 border-white object-cover"
               onError={(e) => {
                 e.currentTarget.onerror = null;
                 e.currentTarget.src = '/default-profile.png';

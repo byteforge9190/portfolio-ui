@@ -28,12 +28,12 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
     website: existingProfile?.website || '',
     linkedinUrl: existingProfile?.linkedinUrl || '',
     githubUrl: existingProfile?.githubUrl || '',
-    profileImage: existingProfile?.profileImage || '',
+    profileImageUrl: existingProfile?.profileImageUrl || '',
     resumeUrl: existingProfile?.resumeUrl || '',
   });
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(existingProfile?.profileImage || null);
+  const [imagePreview, setImagePreview] = useState<string | null>(existingProfile?.profileImageUrl || null);
 
   const validateForm = (): boolean => {
     const newErrors: Partial<CreateProfileRequest> = {};
@@ -79,12 +79,20 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
     setLoading(true);
 
     try {
-      let finalProfileImage = formData.profileImage; // Start with existing URL or empty
+      let finalProfileImage = formData.profileImageUrl; // Start with existing URL or empty
 
+      // Handle Image Upload First
       if (selectedImage) {
-        // Upload image to Cloudinary
-        const uploadResponse = await profileAPI.uploadImage(selectedImage);
-        finalProfileImage = uploadResponse.url; // Get the URL from the upload response
+        try {
+          const uploadResponse = await profileAPI.uploadImage(selectedImage);
+          finalProfileImage = uploadResponse.secure_url; // Use secure_url from Cloudinary
+          toast.success('Image uploaded successfully!');
+        } catch (uploadError) {
+          console.error('Error uploading profile image:', uploadError);
+          toast.error('Failed to upload profile image. Please try again.');
+          setLoading(false);
+          return; // Stop submission if image upload fails
+        }
       }
 
       const cleanedData = Object.fromEntries(
@@ -95,7 +103,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
       ) as CreateProfileRequest;
 
       // Update formData with the new image URL before submitting the profile
-      cleanedData.profileImage = finalProfileImage;
+      cleanedData.profileImageUrl = finalProfileImage;
 
       if (existingProfile) {
         await profileAPI.update(cleanedData);
@@ -139,7 +147,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
       setImagePreview(URL.createObjectURL(file));
     }
     // Clear any previous URL validation error for this field
-    if (errors.profileImage) {
+    if (errors.profileImageUrl) {
       setErrors(prev => ({ ...prev, profileImage: undefined }));
     }
   };
@@ -218,7 +226,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
       {currentPreview && (
         <div className="mt-3">
           {field === 'profileImageUrl' ? (
-            <img src={currentPreview} alt="Preview" className="w-24 h-24 object-cover rounded-full border border-gray-600" />
+            <img src={currentPreview} alt="Preview" className="w-48 h-48 object-cover rounded-full border border-gray-600" />
           ) : (
             <a href={currentPreview} target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:underline">
               View Current File
@@ -273,7 +281,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
           <h4 className="text-lg font-semibold text-gray-300 mb-4">Media & Documents</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {renderFileInput(
-              'profileImage',
+              'profileImageUrl',
               'Profile Image',
               'image/png, image/jpeg',
               imagePreview,

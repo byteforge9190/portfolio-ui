@@ -16,6 +16,32 @@ import type {
   CreateProfileRequest,
   ApiError,
 } from '../types';
+import axios from 'axios';
+
+// =============================================================================
+// Cloudinary Upload Service
+// =============================================================================
+
+const CLOUDINARY_CLOUD_NAME = 'dldlyt93b';
+const CLOUDINARY_UPLOAD_PRESET = 'ml_default';
+const CLOUDINARY_API_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+
+interface CloudinaryUploadResponse {
+  secure_url: string;
+  public_id: string;
+  url: string;
+}
+
+
+const uploadFileToCloudinary = async (file: File): Promise<CloudinaryUploadResponse> => {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+  const response = await axios.post<CloudinaryUploadResponse>(CLOUDINARY_API_URL, formData);
+  return response.data;
+};
+
 
 // =============================================================================
 // Authentication Services
@@ -89,15 +115,8 @@ export const projectAPI = {
   },
 
   // Upload project image
-  uploadProjectImage: async (file: File): Promise<{ url: string }> => {
-    const formData = new FormData();
-    formData.append('projectImage', file);
-    const response = await api.post('/upload/project-image', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return response.data;
+  uploadProjectImage: async (file: File): Promise<CloudinaryUploadResponse> => {
+    return uploadFileToCloudinary(file);
   },
 };
 
@@ -197,11 +216,8 @@ export const profileAPI = {
   },
 
   // Upload profile image
-  uploadImage: async (file: File): Promise<{ url: string; public_id: string }> => {
-    const formData = new FormData();
-    formData.append('profileImage', file);
-    const response = await api.post('/upload/profile-image', formData);
-    return response.data.url;
+  uploadImage: async (file: File): Promise<CloudinaryUploadResponse> => {
+    return uploadFileToCloudinary(file);
   },
 };
 
