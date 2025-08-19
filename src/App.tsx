@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute'; // Import the protected route
+import Home from './pages/Home';
 import Projects from './pages/Projects';
 import Skills from './pages/Skills';
 import Experience from './pages/Experience';
@@ -23,7 +24,7 @@ const App: React.FC = () => {
         <Header />
         <main className="container mx-auto p-8 flex-grow">
           <Routes>
-            <Route path="/" element={<Projects />} /> 
+            <Route path="/" element={<Home />} /> 
             <Route path="/projects" element={<Projects />} />
             <Route path="/skills" element={<Skills />} />
             <Route path="/experience" element={<Experience />} />
