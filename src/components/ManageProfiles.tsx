@@ -108,7 +108,7 @@ const ManageProfiles: React.FC<ManageProfilesProps> = ({ onSuccess }) => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
         <h3 className="text-2xl font-bold text-teal-300 flex items-center">
           <FaUser className="mr-3" />
           Profile Management
@@ -116,7 +116,7 @@ const ManageProfiles: React.FC<ManageProfilesProps> = ({ onSuccess }) => {
         {!profile ? (
           <button
             onClick={handleCreateOrEdit}
-            className="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors"
+            className="flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors mt-4 sm:mt-0"
           >
             <FaPlus />
             <span>Create Profile</span>
@@ -124,7 +124,7 @@ const ManageProfiles: React.FC<ManageProfilesProps> = ({ onSuccess }) => {
         ) : (
           <button
             onClick={handleCreateOrEdit}
-            className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors mt-4 sm:mt-0"
           >
             <FaEdit />
             <span>Edit Profile</span>
@@ -158,9 +158,9 @@ const ManageProfiles: React.FC<ManageProfilesProps> = ({ onSuccess }) => {
           key={profile._id}
           className="bg-gray-800 rounded-lg border border-gray-700 p-6 hover:border-gray-600 transition-colors"
         >
-          <div className="flex items-start justify-between">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
             {/* Profile Info */}
-            <div className="flex-1">
+            <div className="flex-1 w-full">
               <div className="flex items-center mb-3">
                 <img
                   src={profile.profileImageUrl || '/default-profile.png'}
@@ -233,7 +233,7 @@ const ManageProfiles: React.FC<ManageProfilesProps> = ({ onSuccess }) => {
             </div>
 
             {/* Actions */}
-            <div className="flex space-x-2 ml-4">
+            <div className="flex flex-wrap gap-2 mt-4 sm:mt-0 sm:ml-4">
               <button
                 onClick={() => window.open('/profile', '_blank')}
                 className="p-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"

@@ -20,9 +20,9 @@ import 'react-toastify/dist/ReactToastify.css';
 const App: React.FC = () => {
   return (
     <Router>
-      <div className="flex flex-col min-h-screen bg-gray-900 text-white">
+      <div className="flex flex-col min-h-screen bg-gray-900 text-white overflow-x-hidden">
         <Header />
-        <main className="container mx-auto p-8 flex-grow">
+        <main className="container mx-auto w-full max-w-screen-xl px-4 sm:px-8 flex-grow">
           <Routes>
             <Route path="/" element={<Home />} /> 
             <Route path="/projects" element={<Projects />} />

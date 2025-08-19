@@ -79,7 +79,7 @@ const Projects: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-wrap items-center gap-3 justify-between mb-6">
         <div>
           <h1 className="text-4xl font-bold text-teal-300">Portfolio Projects</h1>
           <p className="text-gray-400 mt-2">
@@ -123,7 +123,7 @@ const Projects: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
           {/* Why: Map over the projects array and render a ProjectCard for each one */}
           {projects.map((project) => (
             <ProjectCard key={project._id} project={project} />

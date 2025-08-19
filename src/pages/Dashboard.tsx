@@ -21,17 +21,17 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="p-6">
-      <h1 className="text-5xl font-extrabold text-teal-300 mb-4 text-center">
+    <div className="mx-auto w-full max-w-screen-xl px-4 sm:px-6 py-6">
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-teal-300 mb-4 text-center">
         Admin Dashboard
       </h1>
       <p className="text-center text-gray-400 mb-10 text-xl">Welcome, {user.email}!</p>
 
-      <div className="flex justify-center mb-8">
-        <div className="bg-gray-800 p-2 rounded-xl flex space-x-2 shadow-inner">
+      <div className="flex justify-center mb-6 px-1">
+        <div className="bg-gray-800 p-2 rounded-xl flex flex-wrap gap-2 shadow-inner">
           <button
             onClick={() => setActiveTab('projects')}
-            className={`px-6 py-3 rounded-lg font-bold transition-all ${
+            className={`px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base rounded-lg font-bold transition-all ${
               activeTab === 'projects' ? 'bg-teal-600 text-white shadow-lg' : 'bg-transparent text-gray-400 hover:bg-gray-700'
             }`}
           >
@@ -39,7 +39,7 @@ const Dashboard: React.FC = () => {
           </button>
           <button
             onClick={() => setActiveTab('skills')}
-            className={`px-6 py-3 rounded-lg font-bold transition-all ${
+            className={`px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base rounded-lg font-bold transition-all ${
               activeTab === 'skills' ? 'bg-teal-600 text-white shadow-lg' : 'bg-transparent text-gray-400 hover:bg-gray-700'
             }`}
           >
@@ -47,7 +47,7 @@ const Dashboard: React.FC = () => {
           </button>
           <button
             onClick={() => setActiveTab('experience')}
-            className={`px-6 py-3 rounded-lg font-bold transition-all ${
+            className={`px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base rounded-lg font-bold transition-all ${
               activeTab === 'experience' ? 'bg-teal-600 text-white shadow-lg' : 'bg-transparent text-gray-400 hover:bg-gray-700'
             }`}
           >
@@ -55,7 +55,7 @@ const Dashboard: React.FC = () => {
           </button>
           <button
             onClick={() => setActiveTab('profile')}
-            className={`px-6 py-3 rounded-lg font-bold transition-all ${
+            className={`px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base rounded-lg font-bold transition-all ${
               activeTab === 'profile' ? 'bg-teal-600 text-white shadow-lg' : 'bg-transparent text-gray-400 hover:bg-gray-700'
             }`}
           >

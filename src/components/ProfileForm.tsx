@@ -226,7 +226,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ existingProfile, onSuccess, o
       {currentPreview && (
         <div className="mt-3">
           {field === 'profileImageUrl' ? (
-            <img src={currentPreview} alt="Preview" className="w-48 h-48 object-cover rounded-full border border-gray-600" />
+            <img src={currentPreview} alt="Preview" className="w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 object-cover rounded-full border border-gray-600" />
           ) : (
             <a href={currentPreview} target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:underline">
               View Current File

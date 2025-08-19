@@ -3,3 +3,8 @@
 @import "tailwindcss";
 
 /* Custom styles can go here */
+
+/* Global responsive guards */
+html, body { overflow-x: hidden; }
+img, video, canvas, svg { max-width: 100%; height: auto; }
+* { min-width: 0; } /* prevents flex/grid children from forcing overflow */

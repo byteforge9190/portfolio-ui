@@ -50,9 +50,9 @@ const Experience: React.FC = () => {
       <div className="space-y-10">
         {experience.map((item) => (
         <div key={item._id} className="bg-gray-800 p-6 rounded-lg shadow-2xl">
-          <div className="flex justify-between items-start mb-2">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-2">
             <div>
-              <h3 className="text-3xl font-bold text-teal-300">{item.title}</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-teal-300 break-words">{item.title}</h3>
               <p className="text-xl text-gray-400">{item.company}</p>
             </div>
             <p className="text-sm text-gray-500 font-mono">

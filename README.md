@@ -11,7 +11,8 @@ A modern, responsive portfolio frontend built with React, TypeScript, and Tailwi
 - **Protected routes** and components
 
 ### 📱 Modern UI/UX
-- **Responsive design** optimized for all devices
+- **Responsive design** optimized for all devices with fluid layouts and adaptive components
+- **Subtle and smooth animations** for enhanced user experience
 - **Dark theme** with modern styling
 - **Interactive components** with smooth animations
 - **Toast notifications** for user feedback
@@ -143,6 +144,7 @@ npm run type-check   # Run TypeScript checks
 - **React Router** - Navigation
 - **Axios** - HTTP client
 - **React Toastify** - Notifications
+- **Framer Motion** - Animations
 
 ## 🎨 UI Components
 
@@ -151,6 +153,9 @@ npm run type-check   # Run TypeScript checks
 - **ProjectCard** - Project showcase component
 - **ProtectedRoute** - Role-based route protection
 - **Forms** - Project, skill, and experience management
+- **AnimatedGradientText** - Text with vibrant, animated gradient
+- **MarqueeWords** - Continuous scrolling list of technologies
+- **AvatarShowcase** - Modern, animated avatar display
 
 ### Pages
 - **Projects** - Portfolio project showcase

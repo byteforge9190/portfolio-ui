@@ -87,12 +87,12 @@ const ManageExperience: React.FC<ManageExperienceProps> = ({ onSuccess }) => {
 
   return (
     <div className="space-y-8">
-      <div className="flex justify-between items-center"> {/* New div for header and button */}
-        <h2 className="text-3xl font-bold text-white">Manage Experience</h2>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2"> {/* New div for header and button */}
+        <h2 className="text-3xl font-bold text-white text-center sm:text-left">Manage Experience</h2>
         {!isFormOpen && ( // Only show button if no form is open
           <button
             onClick={() => setIsCreating(true)}
-            className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+            className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg transition-colors w-full sm:w-auto"
           >
             Add New Experience
           </button>

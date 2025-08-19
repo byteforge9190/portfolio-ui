@@ -17,7 +17,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           <img 
             src={project.imageUrl} 
             alt={project.title}
-            className="w-full h-64 object-cover"
+            className="w-full h-48 sm:h-64 object-cover"
             onError={(e) => {
               e.currentTarget.onerror = null; 
               e.currentTarget.src = '/placeholder.jpg';

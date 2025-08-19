@@ -84,7 +84,7 @@ const ProfilePage: React.FC = () => {
             <img
               src={profile.profileImageUrl || '/default-profile.png'}
               alt="Profile"
-              className="w-64 h-64 rounded-full border-4 border-white object-cover"
+              className="w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 max-w-full border-4 border-white object-cover mx-auto block"
               onError={(e) => {
                 e.currentTarget.onerror = null;
                 e.currentTarget.src = '/default-profile.png';
