@@ -1,6 +1,7 @@
 // src/pages/Skills.tsx
 // Why: This component fetches and displays the user's skills.
 
+import { motion } from "framer-motion";
 import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
 import type { Skill } from '../types';
@@ -46,7 +47,11 @@ const Skills: React.FC = () => {
   }, {} as Record<string, Skill[]>);
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <h1 className="text-4xl font-bold mb-8 text-center text-teal-300">My Skills</h1>
       {/* Why: Map over the grouped categories. */}
       {Object.entries(skillsByCategory).map(([category, skillsInCat]) => (
@@ -68,7 +73,7 @@ const Skills: React.FC = () => {
           </div>
         </section>
       ))}
-    </div>
+    </motion.div>
   );
 };
 

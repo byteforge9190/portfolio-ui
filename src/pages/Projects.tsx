@@ -1,6 +1,7 @@
 // src/pages/Projects.tsx
 // Why: This component fetches and displays the list of projects from the API with role-based features.
 
+import { motion } from "framer-motion";
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { projectAPI, handleAPIError } from '../api/services';
@@ -73,7 +74,11 @@ const Projects: React.FC = () => {
   }
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-4xl font-bold text-teal-300">Portfolio Projects</h1>
@@ -135,7 +140,7 @@ const Projects: React.FC = () => {
           </p>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

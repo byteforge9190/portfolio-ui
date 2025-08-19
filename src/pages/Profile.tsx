@@ -1,6 +1,7 @@
 // src/pages/Profile.tsx
 // Why: Public profile page that displays the portfolio owner's information
 
+import { motion } from "framer-motion";
 import React, { useState, useEffect } from 'react';
 import { profileAPI, handleAPIError } from '../api/services';
 import type { Profile, ApiError } from '../types';
@@ -70,7 +71,12 @@ const ProfilePage: React.FC = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="max-w-4xl mx-auto"
+    >
       <div className="bg-gray-800 rounded-xl shadow-2xl overflow-hidden border border-gray-700">
         {/* Header Section */}
         <div className="bg-gradient-to-r from-teal-600 to-teal-800 px-8 py-12 text-center">
@@ -92,29 +98,29 @@ const ProfilePage: React.FC = () => {
 
         {/* Contact Information */}
         <div className="px-8 py-6 bg-gray-750 border-b border-gray-700">
-          <h2 className="text-2xl font-bold text-teal-300 mb-4">Contact Information</h2>
+          <h2 className="text-2xl font-bold text-blue-400 mb-4">Contact Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {profile.location && (
               <div className="flex items-center space-x-3 text-gray-300">
-                <FaMapMarkerAlt className="text-teal-400" />
+                <FaMapMarkerAlt className="text-blue-400" />
                 <span>{profile.location}</span>
               </div>
             )}
             {profile.phone && (
               <div className="flex items-center space-x-3 text-gray-300">
-                <FaPhone className="text-teal-400" />
+                <FaPhone className="text-blue-400" />
                 <span>{profile.phone}</span>
               </div>
             )}
             <div className="flex items-center space-x-3 text-gray-300">
-              <FaEnvelope className="text-teal-400" />
+              <FaEnvelope className="text-blue-400" />
               <a href={`mailto:${profile.email}`} className="hover:text-teal-300 transition-colors">
                 {profile.email}
               </a>
             </div>
             {profile.website && (
               <div className="flex items-center space-x-3 text-gray-300">
-                <FaGlobe className="text-teal-400" />
+                <FaGlobe className="text-blue-400" />
                 <a 
                   href={profile.website} 
                   target="_blank" 
@@ -131,7 +137,7 @@ const ProfilePage: React.FC = () => {
         {/* Social Links */}
         {(profile.linkedinUrl || profile.githubUrl || profile.resumeUrl) && (
           <div className="px-8 py-6 bg-gray-800 border-b border-gray-700">
-            <h2 className="text-2xl font-bold text-teal-300 mb-4">Links</h2>
+            <h2 className="text-2xl font-bold text-blue-400 mb-4">Links</h2>
             <div className="flex flex-wrap gap-4">
               {profile.linkedinUrl && (
                 <a
@@ -173,7 +179,7 @@ const ProfilePage: React.FC = () => {
         {/* Bio/About Section */}
         {profile.bio && (
           <div className="px-8 py-6">
-            <h2 className="text-2xl font-bold text-teal-300 mb-4">About Me</h2>
+            <h2 className="text-2xl font-bold text-blue-400 mb-4">About Me</h2>
             <div className="text-gray-300 leading-relaxed whitespace-pre-line">
               {profile.bio}
             </div>
@@ -188,7 +194,7 @@ const ProfilePage: React.FC = () => {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

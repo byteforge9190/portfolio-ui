@@ -1,6 +1,7 @@
 // src/pages/Experience.tsx
 // Why: This component fetches and displays the user's professional experience.
 
+import { motion } from "framer-motion";
 import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
 import type { ExperienceItem } from '../types';
@@ -40,7 +41,11 @@ const Experience: React.FC = () => {
   }
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <h1 className="text-4xl font-bold mb-8 text-center text-teal-300">My Experience</h1>
       <div className="space-y-10">
         {experience.map((item) => (
@@ -63,7 +68,7 @@ const Experience: React.FC = () => {
         </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
