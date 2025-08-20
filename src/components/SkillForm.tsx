@@ -107,8 +107,10 @@ const SkillForm: React.FC<SkillFormProps> = ({ skill, onSuccess, onCancel }) => 
             <option>Frontend</option>
             <option>Backend</option>
             <option>Database</option>
-            <option>DevOps</option>
-            <option>Tools</option>
+            <option>DevOps & Automation</option>
+            <option>Developer Tools</option>
+            <option>Cloud & Hosting</option>
+            <option>Testing & Quality</option>
           </select>
         </div>
         <div className="flex gap-4">

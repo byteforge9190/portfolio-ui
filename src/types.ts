@@ -47,7 +47,7 @@ export interface Skill {
   _id: string;
   name: string;
   proficiency: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
-  category: 'Frontend' | 'Backend' | 'Database' | 'DevOps' | 'Tools';
+  category: 'Frontend' | 'Backend' | 'Database' | 'DevOps & Automation' | 'Developer Tools' | 'Cloud & Hosting' | 'Testing & Quality';
   user: {
     _id: string;
     email: string;
@@ -107,7 +107,7 @@ export interface CreateProjectRequest {
 export interface CreateSkillRequest {
   name: string;
   proficiency: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
-  category: 'Frontend' | 'Backend' | 'Database' | 'DevOps' | 'Tools';
+  category: 'Frontend' | 'Backend' | 'Database' | 'DevOps & Automation' | 'Developer Tools' | 'Cloud & Hosting' | 'Testing & Quality';
 }
 
 export interface CreateExperienceRequest {
