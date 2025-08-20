@@ -17,7 +17,7 @@ const sizeMap: Record<Size, string> = {
   // Larger than before, but clamped so phones don't explode
   sm: "w-[clamp(8rem,22vw,11rem)] h-[clamp(8rem,22vw,11rem)]",
   md: "w-[clamp(11rem,28vw,18rem)] h-[clamp(11rem,28vw,18rem)]",
-  lg: "w-[clamp(14rem,36vw,26rem)] h-[clamp(14rem,36vw,26rem)]",
+  lg: "w-[clamp(14rem,36vw,34rem)] h-[clamp(14rem,36vw,34rem)]",
 };
 
 export default function AvatarShowcase({
