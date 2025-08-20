@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
 import type { ExperienceItem } from '../types';
+import NoDataFound from '../components/NoDataFound';
+import { FaBriefcase } from 'react-icons/fa';
 
 const Experience: React.FC = () => {
   const [experience, setExperience] = useState<ExperienceItem[]>([]);
@@ -37,7 +39,13 @@ const Experience: React.FC = () => {
   }
 
   if (experience.length === 0) {
-    return <p className="text-center text-lg text-gray-400">No experience found.</p>;
+    return (
+      <NoDataFound
+        icon={FaBriefcase}
+        title="No Experience Found"
+        message="The portfolio owner hasn't added any experience yet."
+      />
+    );
   }
 
   return (

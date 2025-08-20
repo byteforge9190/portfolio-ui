@@ -8,6 +8,8 @@ import { projectAPI, handleAPIError } from '../api/services';
 import { useAuthStore } from '../store/authStore';
 import ProjectCard from '../components/ProjectCard';
 import type { Project, ApiError } from '../types';
+import NoDataFound from '../components/NoDataFound';
+import { FaFolderOpen } from 'react-icons/fa';
 
 const Projects: React.FC = () => {
   // Why: Use state to store the fetched projects and loading/error status.
@@ -102,26 +104,14 @@ const Projects: React.FC = () => {
       </div>
 
       {projects.length === 0 ? (
-        <div className="text-center py-16">
-          <div className="max-w-md mx-auto">
-            <div className="text-6xl text-gray-600 mb-4">📂</div>
-            <h3 className="text-xl font-semibold text-gray-300 mb-2">No Projects Found</h3>
-            <p className="text-gray-400 mb-6">
-              {canManageContent() 
-                ? "Start building your portfolio by creating your first project!"
-                : "The portfolio owner hasn't added any projects yet."
-              }
-            </p>
-            {canManageContent() && (
-              <Link 
-                to="/dashboard"
-                className="bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition-colors inline-block font-semibold"
-              >
-                Create First Project
-              </Link>
-            )}
-          </div>
-        </div>
+        <NoDataFound
+          icon={FaFolderOpen}
+          title="No Projects Found"
+          message={canManageContent()
+            ? "Start building your portfolio by creating your first project!"
+            : "The portfolio owner hasn't added any projects yet."
+          }
+        />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
           {/* Why: Map over the projects array and render a ProjectCard for each one */}
@@ -130,9 +120,7 @@ const Projects: React.FC = () => {
           ))}
         </div>
       )}
-
-      {/* Why: Show user info for content managers */}
-      {canManageContent() && user && (
+    {canManageContent() && user && (
         <div className="mt-12 p-4 bg-gray-800 border border-gray-700 rounded-lg">
           <h3 className="text-lg font-semibold text-teal-300 mb-2">Content Management</h3>
           <p className="text-gray-400">

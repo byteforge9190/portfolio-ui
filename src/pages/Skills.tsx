@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
 import type { Skill } from '../types';
+import NoDataFound from '../components/NoDataFound';
+import { FaTools } from 'react-icons/fa';
 
 const Skills: React.FC = () => {
   const [skills, setSkills] = useState<Skill[]>([]);
@@ -37,7 +39,13 @@ const Skills: React.FC = () => {
   }
 
   if (skills.length === 0) {
-    return <p className="text-center text-lg text-gray-400">No skills found.</p>;
+    return (
+      <NoDataFound
+        icon={FaTools}
+        title="No Skills Found"
+        message="The portfolio owner hasn't added any skills yet."
+      />
+    );
   }
 
   // Why: Group skills by category for a cleaner display.

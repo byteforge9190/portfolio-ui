@@ -7,6 +7,7 @@ import { profileAPI, handleAPIError } from '../api/services';
 import type { Profile, ApiError } from '../types';
 import { toast } from 'react-toastify';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaGlobe, FaLinkedin, FaGithub, FaFileDownload, FaUser } from 'react-icons/fa';
+import NoDataFound from '../components/NoDataFound';
 import AvatarShowcase from "../components/AvatarShowcase";
 import AnimatedGradientText from "../components/AnimatedGradientText";
 import Learning from './Learning';
@@ -65,13 +66,11 @@ const ProfilePage: React.FC = () => {
 
   if (!profile) { // Check for single profile object
     return (
-      <div className="text-center py-12">
-        <div className="bg-yellow-900/20 border border-yellow-700 rounded-lg p-6 max-w-md mx-auto">
-          <FaUser className="text-4xl text-yellow-400 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-yellow-400 mb-2">No Profile Found</h2>
-          <p className="text-gray-300">The portfolio owner hasn&apos;t set up their profile yet, or there was an issue fetching it.</p>
-        </div>
-      </div>
+      <NoDataFound
+        icon={FaUser}
+        title="No Profile Found"
+        message="The portfolio owner hasn&apos;t set up their profile yet, or there was an issue fetching it."
+      />
     );
   }
 

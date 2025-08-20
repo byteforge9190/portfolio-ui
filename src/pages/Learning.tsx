@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { learningAPI } from '../api/learning';
 import type { LearningItem } from '../types';
+import NoDataFound from '../components/NoDataFound';
+import { FaBookOpen } from 'react-icons/fa';
 
 const Learning: React.FC = () => {
   const [learningItems, setLearningItems] = useState<LearningItem[]>([]);
@@ -22,7 +24,24 @@ const Learning: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-64">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-400 mx-auto mb-4"></div>
+          <p className="text-lg text-gray-400">Loading learning items...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (learningItems.length === 0) {
+    return (
+      <NoDataFound
+        icon={FaBookOpen}
+        title="No Learning Items Found"
+        message="The portfolio owner hasn't added any learning items yet."
+      />
+    );
   }
 
   return (
