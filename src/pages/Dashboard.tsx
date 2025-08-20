@@ -6,7 +6,7 @@ import ManageProjects from '../components/ManageProjects';
 import ManageSkills from '../components/ManageSkills'; 
 import ManageExperience from '../components/ManageExperience';
 import ManageProfiles from '../components/ManageProfiles';
-import LearningProgress from '../components/LearningProgress';
+import ManageLearning from '../components/ManageLearning';
 
 const Dashboard: React.FC = () => {
   const { user } = useAuthStore();

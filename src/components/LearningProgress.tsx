@@ -1,5 +1,5 @@
 import React from 'react';
-import { LearningItem } from '../types';
+import type { LearningItem } from '../types';
 
 const learningItems: LearningItem[] = [
   {
