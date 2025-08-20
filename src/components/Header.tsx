@@ -57,6 +57,9 @@ const Header: React.FC = () => {
           <Link to="/profile" className="text-gray-300 hover:text-teal-300 transition-colors">
             Profile
           </Link>
+          <Link to="/learning" className="text-gray-300 hover:text-teal-300 transition-colors">
+            Learning
+          </Link>
           {/* Show dashboard link only for users who can manage content */}
           {isOwner() && (
             <Link to="/dashboard" className="text-gray-300 hover:text-teal-300 transition-colors">
@@ -151,6 +154,9 @@ const Header: React.FC = () => {
             </Link>
             <Link to="/profile" className="text-gray-300 hover:text-teal-300 transition-colors py-1" onClick={() => setIsMobileMenuOpen(false)}>
               Profile
+            </Link>
+            <Link to="/learning" className="text-gray-300 hover:text-teal-300 transition-colors py-1" onClick={() => setIsMobileMenuOpen(false)}>
+              Learning
             </Link>
             {isOwner() && (
               <Link to="/dashboard" className="text-gray-300 hover:text-teal-300 transition-colors py-1" onClick={() => setIsMobileMenuOpen(false)}>

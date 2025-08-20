@@ -55,6 +55,16 @@ const ManageLearning: React.FC = () => {
               <span className="font-bold text-gray-400">Status: </span>
               <span className={`ml-2 font-medium ${item.status === 'In Progress' ? 'text-yellow-500' : 'text-green-500'}`}>{item.status}</span>
             </div>
+            <div className="mt-2 text-sm text-gray-500">
+              <span className="font-bold text-gray-400">Date Started: </span>
+              <span className="ml-2">{item.dateStarted}</span>
+            </div>
+            {item.link && (
+              <div className="mt-2 text-sm text-gray-500">
+                <span className="font-bold text-gray-400">Resource: </span>
+                <a href={item.link} target="_blank" rel="noopener noreferrer" className="ml-2 text-blue-400 hover:underline">Link</a>
+              </div>
+            )}
             <div className="mt-4 flex gap-4">
               <button onClick={() => setEditingItem(item)} className="p-2 rounded bg-blue-600 hover:bg-blue-700 text-white">Edit</button>
               <button onClick={() => handleDelete(item._id)} className="p-2 rounded bg-red-600 hover:bg-red-700 text-white">Delete</button>

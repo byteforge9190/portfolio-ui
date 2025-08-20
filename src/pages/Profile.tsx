@@ -206,6 +206,11 @@ const ProfilePage: React.FC = () => {
           </div>
         )}
 
+        {/* Learning Section */}
+        <div className="px-8 py-6">
+          <Learning />
+        </div>
+
         {/* Metadata */}
         <div className="px-8 py-4 bg-gray-750 text-sm text-gray-500 border-t border-gray-700">
           <p>Profile created: {new Date(profile.createdAt).toLocaleDateString()}</p>

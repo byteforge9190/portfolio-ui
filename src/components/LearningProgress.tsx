@@ -1,27 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { learningAPI } from '../api/learning';
 import type { LearningItem } from '../types';
 
-const learningItems: LearningItem[] = [
-  {
-    _id: "1",
-    title: "Advanced TypeScript",
-    description: "Deep dive into complex types, generics, and decorators.",
-    status: "In Progress",
-    dateStarted: "2025-08-01",
-    link: "https://www.typescriptlang.org/docs/handbook/advanced-types.html"
-  },
-  {
-    _id: "2",
-    title: "Tailwind CSS Customization",
-    description: "Learning to extend and configure Tailwind for a unique design system.",
-    status: "In Progress",
-    dateStarted: "2025-07-20",
-    link: "https://tailwindcss.com/docs/customizing-colors"
-  },
-  // Add more learning items as needed
-];
-
 const LearningProgress: React.FC = () => {
+  const [learningItems, setLearningItems] = useState<LearningItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchLearningItems = async () => {
+      try {
+        const response = await learningAPI.getAll();
+        setLearningItems(response.data || []);
+      } catch (error) {
+        console.error('Error fetching learning items:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLearningItems();
+  }, []);
+
+  if (loading) {
+    return <div>Loading learning items...</div>;
+  }
+
   return (
     <div className="space-y-6">
       <h3 className="text-3xl font-bold text-gray-300">My Learning Journey</h3>

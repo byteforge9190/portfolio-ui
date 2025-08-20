@@ -15,6 +15,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard'; 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Learning from './pages/Learning';
 
 
 const App: React.FC = () => {
@@ -31,6 +32,7 @@ const App: React.FC = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/learning" element={<Learning />} />
             {/* Why: Protect the dashboard route with our new component. */}
             {/* If the user is not authenticated, they will be redirected. */}
             <Route 
