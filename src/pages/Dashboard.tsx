@@ -6,10 +6,11 @@ import ManageProjects from '../components/ManageProjects';
 import ManageSkills from '../components/ManageSkills'; 
 import ManageExperience from '../components/ManageExperience';
 import ManageProfiles from '../components/ManageProfiles';
+import LearningProgress from '../components/LearningProgress';
 
 const Dashboard: React.FC = () => {
   const { user } = useAuthStore();
-  const [activeTab, setActiveTab] = useState<'projects' | 'skills' | 'experience' | 'profile'>('projects');
+  const [activeTab, setActiveTab] = useState<'projects' | 'skills' | 'experience' | 'profile' | 'learning'>('projects');
   const [refreshKey, setRefreshKey] = useState(0);
 
   const handleSuccess = () => {
@@ -61,6 +62,14 @@ const Dashboard: React.FC = () => {
           >
             Profile
           </button>
+          <button
+            onClick={() => setActiveTab('learning')}
+            className={`px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base rounded-lg font-bold transition-all ${
+              activeTab === 'learning' ? 'bg-teal-600 text-white shadow-lg' : 'bg-transparent text-gray-400 hover:bg-gray-700'
+            }`}
+          >
+            Learning
+          </button>
         </div>
       </div>
 
@@ -90,7 +99,7 @@ const Dashboard: React.FC = () => {
         )}
         {activeTab === 'learning' && (
           <div className="space-y-10">
-            <LearningProgress />
+            <ManageLearning />
           </div>
         )}
       </section>
