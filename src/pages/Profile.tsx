@@ -10,6 +10,7 @@ import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaGlobe, FaLinkedin, FaGithub, FaF
 import AvatarShowcase from "../components/AvatarShowcase";
 import AnimatedGradientText from "../components/AnimatedGradientText";
 import Learning from './Learning';
+import PasswordUpdateForm from '../components/PasswordUpdateForm';
 
 
 const ProfilePage: React.FC = () => {
@@ -211,6 +212,11 @@ const ProfilePage: React.FC = () => {
         {/* Learning Section */}
         <div className="px-8 py-6">
           <Learning />
+        </div>
+
+        {/* Password Update Section */}
+        <div className="px-8 py-6">
+          <PasswordUpdateForm />
         </div>
 
         {/* Metadata */}

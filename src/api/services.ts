@@ -77,6 +77,12 @@ export const authAPI = {
     const response = await api.put(`/auth/users/${userId}/role`, { role });
     return response.data;
   },
+
+  // Update user password
+  updatePassword: async (currentPassword: string, newPassword: string): Promise<AuthResponse> => {
+    const response = await api.put('/auth/updatepassword', { currentPassword, newPassword });
+    return response.data;
+  },
 };
 
 // =============================================================================
