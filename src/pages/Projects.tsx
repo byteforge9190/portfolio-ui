@@ -120,7 +120,9 @@ const Projects: React.FC = () => {
           ))}
         </div>
       )}
-    {canManageContent() && user && (
+
+      {/* Why: Show user info for content managers */}
+      {canManageContent() && user && (
         <div className="mt-12 p-4 bg-gray-800 border border-gray-700 rounded-lg">
           <h3 className="text-lg font-semibold text-teal-300 mb-2">Content Management</h3>
           <p className="text-gray-400">

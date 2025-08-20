@@ -31,11 +31,31 @@ const Experience: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <p className="text-center text-lg text-gray-400">Loading experience...</p>;
+    return (
+      <div className="flex items-center justify-center min-h-64">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-400 mx-auto mb-4"></div>
+          <p className="text-lg text-gray-400">Loading experience...</p>
+        </div>
+      </div>
+    );
   }
 
   if (error) {
-    return <p className="text-center text-lg text-red-400">{error}</p>;
+    return (
+      <div className="text-center py-12">
+        <div className="bg-red-900/50 border border-red-600 text-red-300 px-6 py-4 rounded-lg max-w-md mx-auto">
+          <h2 className="text-xl font-semibold text-red-400 mb-2">Error Loading Experience</h2>
+          <p>{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
   }
 
   if (experience.length === 0) {
