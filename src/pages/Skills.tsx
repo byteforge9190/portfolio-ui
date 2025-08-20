@@ -15,7 +15,7 @@ const Skills: React.FC = () => {
     const fetchSkills = async () => {
       try {
         // Why: Fetch skills from the API. We can use our advanced query features here!
-        const response = await api.get('/skills?sort=category,name'); // Sort by category then by name
+        const response = await api.get('/skills?sort=category,name&limit=1000'); // Sort by category then by name
         setSkills(response.data.data);
       } catch (err) {
         console.error('Failed to fetch skills:', err);

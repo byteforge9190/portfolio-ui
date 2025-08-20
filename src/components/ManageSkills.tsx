@@ -27,7 +27,7 @@ const ManageSkills: React.FC<ManageSkillsProps> = ({ onSuccess }) => {
   const fetchSkills = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await api.get('/skills?sort=category,name');
+      const response = await api.get('/skills?sort=category,name&limit=1000');
       setSkills(response.data.data);
     } catch (err) {
       console.error('Failed to fetch skills:', err);
