@@ -143,4 +143,12 @@ export interface ApiError extends Error {
   };
 }
 
-declare module 'heic2any';
+decalre module 'heic2any';
+export interface LearningItem {
+  _id: string;
+  title: string;
+  description: string;
+  status: 'In Progress' | 'Completed';
+  dateStarted: string;
+  link?: string;
+}

@@ -88,6 +88,11 @@ const Dashboard: React.FC = () => {
             <ManageProfiles key={`profile-${refreshKey}`} onSuccess={handleSuccess} />
           </div>
         )}
+        {activeTab === 'learning' && (
+          <div className="space-y-10">
+            <LearningProgress />
+          </div>
+        )}
       </section>
     </div>
   );
