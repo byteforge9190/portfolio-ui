@@ -143,7 +143,7 @@ export interface ApiError extends Error {
   };
 }
 
-decalre module 'heic2any';
+declare module 'heic2any';
 export interface LearningItem {
   _id: string;
   title: string;
