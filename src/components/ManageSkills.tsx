@@ -104,7 +104,7 @@ const ManageSkills: React.FC<ManageSkillsProps> = ({ onSuccess }) => {
       )}
 
       {skills.length === 0 && !isFormOpen ? (
-        <p className="text-center text-gray-400 mt-8">No skills found. Click "Add New Skill" to get started.</p>
+        <p className="text-center text-gray-400 mt-8">No skills found. Click &quot;Add New Skill&quot; to get started.</p>
       ) : (
         <div className="grid grid-cols-1 gap-6">
           {skills.map((skill) => (

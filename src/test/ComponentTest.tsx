@@ -173,7 +173,7 @@ const ComponentTest: React.FC = () => {
       <div className="bg-gray-800 p-6 rounded-lg shadow-2xl">
         <h2 className="text-2xl font-bold text-teal-300 mb-4">Test Results</h2>
         {testResults.length === 0 ? (
-          <p className="text-gray-400">No tests run yet. Click 'Run All Tests' to start.</p>
+          <p className="text-gray-400">No tests run yet. Click &apos;Run All Tests&apos; to start.</p>
         ) : (
           <div className="space-y-2">
             {testResults.map((result, index) => (

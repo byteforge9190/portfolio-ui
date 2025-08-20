@@ -7,6 +7,8 @@ import { profileAPI, handleAPIError } from '../api/services';
 import type { Profile, ApiError } from '../types';
 import { toast } from 'react-toastify';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaGlobe, FaLinkedin, FaGithub, FaFileDownload, FaUser } from 'react-icons/fa';
+import AvatarShowcase from "../components/AvatarShowcase";
+import AnimatedGradientText from "../components/AnimatedGradientText";
 
 const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<Profile | null>(null); // Changed to single Profile object
@@ -64,7 +66,7 @@ const ProfilePage: React.FC = () => {
         <div className="bg-yellow-900/20 border border-yellow-700 rounded-lg p-6 max-w-md mx-auto">
           <FaUser className="text-4xl text-yellow-400 mx-auto mb-4" />
           <h2 className="text-xl font-semibold text-yellow-400 mb-2">No Profile Found</h2>
-          <p className="text-gray-300">The portfolio owner hasn't set up their profile yet, or there was an issue fetching it.</p>
+          <p className="text-gray-300">The portfolio owner hasn&apos;t set up their profile yet, or there was an issue fetching it.</p>
         </div>
       </div>
     );
@@ -72,29 +74,47 @@ const ProfilePage: React.FC = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="max-w-4xl mx-auto"
-    >
-      <div className="bg-gray-800 rounded-xl shadow-2xl overflow-hidden border border-gray-700">
-        {/* Header Section */}
-        <div className="bg-gradient-to-r from-teal-600 to-teal-800 px-8 py-12 text-center">
-          <div className="mb-6">
-            <img
-              src={profile.profileImageUrl || '/default-profile.png'}
-              alt="Profile"
-              className="w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 max-w-full border-4 border-white object-cover mx-auto block"
-              onError={(e) => {
-                e.currentTarget.onerror = null;
-                e.currentTarget.src = '/default-profile.png';
-              }}
-            />
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5 }}
+  className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 mt-8 md:mt-12"
+>
+  {/* CARD — glassy, rounded, subtle ring & real shadow */}
+  <div className="rounded-2xl border border-white/10 bg-slate-900/60 shadow-2xl backdrop-blur supports-[backdrop-filter]:bg-slate-900/50 overflow-hidden">
+    {/* HEADER */}
+    <div className="relative">
+      {/* very subtle background, not a blob */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800" />
+
+      <div className="relative px-6 md:px-12 py-12 md:py-16">
+        {/* Side-by-side on md+, stacked on mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-[auto,1fr] items-center gap-10">
+          <AvatarShowcase
+            src={profile.profileImageUrl || "/default-profile.png"}
+            alt={`${profile.fullName} headshot`}
+            size="lg"
+            interactive
+            float
+            calm  // <-- disables orbs/pulses/conic so it looks professional
+          />
+
+          <div className="text-center md:text-left">
+            <div><AnimatedGradientText className="text-5xl md:text-6xl font-extrabold tracking-tight mb-2">
+              {profile.fullName}
+            </AnimatedGradientText></div>
+            <div><AnimatedGradientText className="text-xl md:text-2xl font-semibold opacity-90 mb-6">
+              {profile.title}
+            </AnimatedGradientText></div>
+            <AnimatedGradientText className="mt-5 max-w-2xl leading-relaxed text-base md:text-lg md:pr-4 mx-auto md:mx-0">
+              {profile.summary}
+            </AnimatedGradientText>
           </div>
-          <h1 className="text-4xl font-bold text-white mb-2">{profile.fullName}</h1>
-          <p className="text-xl text-teal-100 mb-4">{profile.title}</p>
-          <p className="text-teal-100 max-w-2xl mx-auto leading-relaxed">{profile.summary}</p>
         </div>
+      </div>
+
+      {/* thin divider */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+    </div>
 
         {/* Contact Information */}
         <div className="px-8 py-6 bg-gray-750 border-b border-gray-700">
@@ -180,9 +200,9 @@ const ProfilePage: React.FC = () => {
         {profile.bio && (
           <div className="px-8 py-6">
             <h2 className="text-2xl font-bold text-blue-400 mb-4">About Me</h2>
-            <div className="text-gray-300 leading-relaxed whitespace-pre-line">
+            <AnimatedGradientText className="leading-relaxed text-base md:text-lg whitespace-pre-line">
               {profile.bio}
-            </div>
+            </AnimatedGradientText>
           </div>
         )}
 

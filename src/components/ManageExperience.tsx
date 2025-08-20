@@ -108,7 +108,7 @@ const ManageExperience: React.FC<ManageExperienceProps> = ({ onSuccess }) => {
       )}
 
       {experience.length === 0 && !isFormOpen ? ( // Adjust message if no items and no form open
-        <p className="text-center text-gray-400 mt-8">No experience items found. Click "Add New Experience" to get started.</p>
+        <p className="text-center text-gray-400 mt-8">No experience items found. Click &quot;Add New Experience&quot; to get started.</p>
       ) : (
         <div className="grid grid-cols-1 gap-6">
           {experience.map((item) => (

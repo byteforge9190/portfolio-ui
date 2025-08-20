@@ -90,7 +90,7 @@ const Login: React.FC = () => {
       </form>
       <div className="mt-6 text-center">
         <p className="text-gray-400">
-          Don't have an account?{' '}
+          Don&apos;t have an account?{' '}
           <button
             onClick={() => navigate('/register')}
             className="text-teal-400 hover:text-teal-300 underline"

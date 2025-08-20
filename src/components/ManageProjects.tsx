@@ -125,7 +125,7 @@ const ManageProjects: React.FC<ManageProjectsProps> = ({ onSuccess }) => {
       )}
 
       {projects.length === 0 && !isFormOpen ? (
-        <p className="text-center text-gray-400 mt-8">No projects to manage. Click "Add New Project" to get started.</p>
+        <p className="text-center text-gray-400 mt-8">No projects to manage. Click &quot;Add New Project&quot; to get started.</p>
       ) : (
         <div className="grid grid-cols-1 gap-6">
           {projects.map((project) => (
