@@ -9,6 +9,8 @@ import { toast } from 'react-toastify';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaGlobe, FaLinkedin, FaGithub, FaFileDownload, FaUser } from 'react-icons/fa';
 import AvatarShowcase from "../components/AvatarShowcase";
 import AnimatedGradientText from "../components/AnimatedGradientText";
+import Learning from './Learning';
+
 
 const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<Profile | null>(null); // Changed to single Profile object
