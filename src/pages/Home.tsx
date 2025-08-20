@@ -18,10 +18,10 @@ export default function Home() {
           </AnimatedGradientText>
           <div className="text-blue-400 w-full max-w-full mx-auto">
             <p className="mt-4 text-base sm:text-lg">
-              I am a full-stack developer with a passion for building beautiful and functional web applications.
+              I am a full-stack developer focused on building scalable, maintainable web applications with strong user experiences.
             </p>
             <p className="mt-4 text-base sm:text-lg">
-              This portfolio is a showcase of my skills and projects. It is built with React, TypeScript, and Tailwind CSS, and it is powered by a custom backend API.
+              This portfolio demonstrates production-grade architecture: React frontend with TypeScript, custom Node.js API, JWT authentication, and automated deployment pipelines.
             </p>
           </div>
           <div className="mt-6 w-full overflow-hidden min-w-0 mx-auto motion-safe:[mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">

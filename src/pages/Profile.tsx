@@ -10,7 +10,6 @@ import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaGlobe, FaLinkedin, FaGithub, FaF
 import NoDataFound from '../components/NoDataFound';
 import AvatarShowcase from "../components/AvatarShowcase";
 import AnimatedGradientText from "../components/AnimatedGradientText";
-import Learning from './Learning';
 import PasswordUpdateForm from '../components/PasswordUpdateForm';
 
 
@@ -199,18 +198,17 @@ const ProfilePage: React.FC = () => {
         )}
 
         {/* Bio/About Section */}
-        {profile.bio && (
-          <div className="px-8 py-6">
-            <h2 className="text-2xl font-bold text-blue-400 mb-4">About Me</h2>
-            <AnimatedGradientText className="leading-relaxed text-base md:text-lg whitespace-pre-line">
-              {profile.bio}
-            </AnimatedGradientText>
-          </div>
-        )}
-
-        {/* Learning Section */}
         <div className="px-8 py-6">
-          <Learning />
+          <h2 className="text-2xl font-bold text-blue-400 mb-4">About Me</h2>
+          <AnimatedGradientText className="leading-relaxed text-base md:text-lg whitespace-pre-line">
+            Hello! I'm Darun A. Mustafa, a software engineer based in Stockholm, Sweden, specializing in full-stack web development with focus on scalability and user experience.
+
+            I build production applications using React, Node.js, and modern deployment practices. My approach emphasizes clean architecture, performance optimization, and maintainable code that can grow with business needs.
+
+            Currently exploring distributed systems patterns and cloud-native architectures to support applications at scale. I take pride in writing code that other developers can easily understand and extend.
+
+            Outside of coding, I enjoy music and long walks that help spark creative solutions to complex technical challenges.
+          </AnimatedGradientText>
         </div>
 
         {/* Password Update Section */}
