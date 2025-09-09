@@ -9,6 +9,7 @@ A modern, responsive portfolio frontend built with React, TypeScript, and Tailwi
 - **JWT token authentication**
 - **Automatic role assignment** (first user becomes owner)
 - **Protected routes** and components
+- **Forgot Password and Reset Password functionality**
 
 ### 📱 Modern UI/UX
 - **Responsive design** optimized for all devices with fluid layouts and adaptive components

@@ -2,7 +2,7 @@
 // Why: This component provides a login form for existing users with role-based authentication.
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { authAPI, handleAPIError } from '../api/services';
 import { toast } from 'react-toastify';
@@ -89,6 +89,11 @@ const Login: React.FC = () => {
         </button>
       </form>
       <div className="mt-6 text-center">
+        <p className="text-gray-400 mb-2">
+          <Link to="/forgot-password" className="text-teal-400 hover:text-teal-300 underline">
+            Forgot Password?
+          </Link>
+        </p>
         <p className="text-gray-400">
           Don&apos;t have an account?{' '}
           <button

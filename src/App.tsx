@@ -12,6 +12,8 @@ import Experience from './pages/Experience';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import Dashboard from './pages/Dashboard'; 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -32,6 +34,8 @@ const App: React.FC = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:resettoken" element={<ResetPassword />} />
             <Route path="/learning" element={<Learning />} />
             {/* Why: Protect the dashboard route with our new component. */}
             {/* If the user is not authenticated, they will be redirected. */}

@@ -60,6 +60,18 @@ export const authAPI = {
     return response.data;
   },
 
+  // Request password reset
+  forgotPassword: async (email: string): Promise<ApiResponse<string>> => {
+    const response = await api.post('/auth/forgotpassword', { email });
+    return response.data;
+  },
+
+  // Reset password with token
+  resetPassword: async (token: string, password: string): Promise<AuthResponse> => {
+    const response = await api.put(`/auth/resetpassword/${token}`, { password });
+    return response.data;
+  },
+
   // Get current user profile
   getMe: async (): Promise<ApiResponse<User>> => {
     const response = await api.get('/auth/me');
