@@ -14,7 +14,7 @@ export default function Home() {
       <div className="flex items-center justify-center">
         <div className="text-center max-w-prose">
           <AnimatedGradientText className="text-[clamp(2rem,6vw,3.5rem)] leading-tight">
-            Darun Björk
+            Darun .A Mustafa
           </AnimatedGradientText>
           <div className="text-blue-400 w-full max-w-full mx-auto">
             <p className="mt-4 text-base sm:text-lg">
@@ -25,7 +25,7 @@ export default function Home() {
             </p>
           </div>
           <div className="mt-6 w-full overflow-hidden min-w-0 mx-auto motion-safe:[mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
-           <MarqueeWords words={["HTML", "CSS", "Python", "JavaScript", "Bootstrap", "React", "Node.js", "Postman", "Angular", "AWS", "Firebase", "Heroku", "Netlify", "TypeScript", "GitHub", "MongoDB", "PostgreSQL", "MySQL", "Docker"]} />
+           <MarqueeWords words={["HTML", "CSS", "Python", "JavaScript", "Bootstrap", "React", "Node.js", "Postman", "Angular", "AWS", "Firebase", "Heroku", "Netlify", "TypeScript", "GitHub", "MongoDB", "PostgreSQL", "MySQL", "Docker", "SendGrid", "Expo"]} />
           </div>
         </div>
       </div>
