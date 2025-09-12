@@ -6,20 +6,20 @@ import { toast } from 'react-toastify';
 import type { ApiError } from '../types';
 
 const ResetPassword: React.FC = () => {
-  const { resettoken } = useParams<{ resettoken: string }>();
+  const { token } = useParams<{ token: string }>();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!resettoken) {
+    if (!token) {
       setError('Password reset token is missing.');
       toast.error('Password reset token is missing.');
     }
-  }, [resettoken]);
+  }, [token]);
 
   const handleSubmit = async (password: string) => {
-    if (!resettoken) {
+    if (!token) {
       setError('Password reset token is missing.');
       toast.error('Password reset token is missing.');
       return;
@@ -29,7 +29,7 @@ const ResetPassword: React.FC = () => {
     setError(null);
 
     try {
-      await authAPI.resetPassword(resettoken, password);
+      await authAPI.resetPassword(token, password);
       toast.success('Your password has been reset successfully. Please login.');
       navigate('/login');
     } catch (err: unknown) {
@@ -49,10 +49,10 @@ const ResetPassword: React.FC = () => {
           {error}
         </div>
       )}
-      {!error && resettoken && (
+      {!error && token && (
         <ResetPasswordForm onSubmit={handleSubmit} loading={loading} />
       )}
-      {!resettoken && (
+      {!token && (
         <p className="text-center text-red-400">Please check your email for a valid reset link.</p>
       )}
     </div>

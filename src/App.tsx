@@ -35,7 +35,7 @@ const App: React.FC = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/resetpassword/:resettoken" element={<ResetPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route path="/learning" element={<Learning />} />
             {/* Why: Protect the dashboard route with our new component. */}
             {/* If the user is not authenticated, they will be redirected. */}
