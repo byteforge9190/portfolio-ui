@@ -201,13 +201,7 @@ const ProfilePage: React.FC = () => {
         <div className="px-8 py-6">
           <h2 className="text-2xl font-bold text-blue-400 mb-4">About Me</h2>
           <AnimatedGradientText className="leading-relaxed text-base md:text-lg whitespace-pre-line">
-            Hello! I'm Darun A. Mustafa, a software engineer based in Stockholm, Sweden, specializing in full-stack web development with focus on scalability and user experience.
-
-            I build production applications using React, Node.js, and modern deployment practices. My approach emphasizes clean architecture, performance optimization, and maintainable code that can grow with business needs.
-
-            Currently exploring distributed systems patterns and cloud-native architectures to support applications at scale. I take pride in writing code that other developers can easily understand and extend.
-
-            Outside of coding, I enjoy music and long walks that help spark creative solutions to complex technical challenges.
+           I&apos;m Darun, a full-stack developer based in Stockholm. I build production applications using React, Node.js, TypeScript, and Docker — from database design through to deployment. My background in operations means I think about reliability and structure, not just making things work. I&apos;m currently deepening my knowledge of distributed systems and cloud-native architecture at Chas Academy. I&apos;ve shipped 5+ projects including a real-time IoT control system, an AI-powered quiz platform, and a portfolio management system — all live and on GitHub.
           </AnimatedGradientText>
         </div>
 
