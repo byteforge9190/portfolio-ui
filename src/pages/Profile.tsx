@@ -8,12 +8,14 @@ import NoDataFound from '../components/NoDataFound';
 import AvatarShowcase from "../components/AvatarShowcase";
 import AnimatedGradientText from "../components/AnimatedGradientText";
 import PasswordUpdateForm from '../components/PasswordUpdateForm';
+import { useAuthStore } from '../store/authStore';
 
 
 const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<Profile | null>(null); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { isAuthenticated } = useAuthStore();
 
   useEffect(() => {
     const fetchProfile = async () => { 
@@ -201,9 +203,11 @@ const ProfilePage: React.FC = () => {
 </AnimatedGradientText>
         </div>
 
-        <div className="px-8 py-6">
-          <PasswordUpdateForm />
-        </div>
+        {isAuthenticated && (
+          <div className="px-8 py-6">
+            <PasswordUpdateForm />
+          </div>
+        )}
 
         <div className="px-8 py-4 text-sm text-gray-500 border-t border-gray-700 bg-gray-750">
           <p>Profile created: {new Date(profile.createdAt).toLocaleDateString()}</p>
