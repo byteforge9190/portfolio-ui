@@ -1,6 +1,3 @@
-// src/pages/Projects.tsx
-// Why: This component fetches and displays the list of projects from the API with role-based features.
-
 import { motion } from "framer-motion";
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -12,33 +9,23 @@ import NoDataFound from '../components/NoDataFound';
 import { FaFolderOpen } from 'react-icons/fa';
 
 const Projects: React.FC = () => {
-  // Why: Use state to store the fetched projects and loading/error status.
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
-  // Why: Get authentication state to show role-based features
   const { canManageContent, user } = useAuthStore();
 
-  // Why: useEffect runs side effects like data fetching when component mounts
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         setLoading(true);
         setError(null);
-        
-        // Why: Use our new API service to fetch projects
         const response = await projectAPI.getAll();
-        
-        // Why: Update the state with the fetched data
         setProjects(response.data || []);
       } catch (err: unknown) {
-        // Why: Handle API errors using our centralized error handler
         console.error('Failed to fetch projects:', err);
         const errorMessage = handleAPIError(err as ApiError);
         setError(errorMessage);
       } finally {
-        // Why: Set loading to false once the request is complete
         setLoading(false);
       }
     };
@@ -46,12 +33,11 @@ const Projects: React.FC = () => {
     fetchProjects();
   }, []);
 
-  // Why: Conditional rendering based on the component's state
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-64">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-400 mx-auto mb-4"></div>
+          <div className="w-12 h-12 mx-auto mb-4 border-b-2 border-teal-400 rounded-full animate-spin"></div>
           <p className="text-lg text-gray-400">Loading projects...</p>
         </div>
       </div>
@@ -61,12 +47,12 @@ const Projects: React.FC = () => {
   if (error) {
     return (
       <div className="text-center">
-        <div className="bg-red-900/50 border border-red-600 text-red-300 px-6 py-4 rounded-lg max-w-md mx-auto">
-          <h3 className="font-semibold mb-2">Error Loading Projects</h3>
+        <div className="max-w-md px-6 py-4 mx-auto text-red-300 border border-red-600 rounded-lg bg-red-900/50">
+          <h3 className="mb-2 font-semibold">Error Loading Projects</h3>
           <p>{error}</p>
           <button 
             onClick={() => window.location.reload()} 
-            className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+            className="px-4 py-2 mt-4 text-white transition-colors bg-red-600 rounded hover:bg-red-700"
           >
             Try Again
           </button>
@@ -81,10 +67,10 @@ const Projects: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="flex flex-wrap items-center gap-3 justify-between mb-6">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <div>
           <h1 className="text-4xl font-bold text-teal-300">Portfolio Projects</h1>
-          <p className="text-gray-400 mt-2">
+          <p className="mt-2 text-gray-400">
             {projects.length > 0 
               ? `Showcasing ${projects.length} project${projects.length === 1 ? '' : 's'}`
               : 'No projects available yet'
@@ -92,11 +78,10 @@ const Projects: React.FC = () => {
           </p>
         </div>
         
-        {/* Why: Show create project button only for users who can manage content */}
         {canManageContent() && (
           <Link 
             to="/dashboard"
-            className="bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition-colors font-semibold"
+            className="px-6 py-3 font-semibold text-white transition-colors bg-teal-600 rounded-lg hover:bg-teal-700"
           >
             Manage Projects
           </Link>
@@ -113,18 +98,16 @@ const Projects: React.FC = () => {
           }
         />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-          {/* Why: Map over the projects array and render a ProjectCard for each one */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {projects.map((project) => (
             <ProjectCard key={project._id} project={project} />
           ))}
         </div>
       )}
 
-      {/* Why: Show user info for content managers */}
       {canManageContent() && user && (
-        <div className="mt-12 p-4 bg-gray-800 border border-gray-700 rounded-lg">
-          <h3 className="text-lg font-semibold text-teal-300 mb-2">Content Management</h3>
+        <div className="p-4 mt-12 bg-gray-800 border border-gray-700 rounded-lg">
+          <h3 className="mb-2 text-lg font-semibold text-teal-300">Content Management</h3>
           <p className="text-gray-400">
             You have <strong>{user.role}</strong> access and can manage portfolio content.
           </p>

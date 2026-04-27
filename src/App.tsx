@@ -1,5 +1,3 @@
-// src/App.tsx
-
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
@@ -24,10 +22,10 @@ const Learning = lazy(() => import('./pages/Learning'));
 const App: React.FC = () => {
   return (
     <Router>
-      <div className="flex flex-col min-h-screen bg-gray-900 text-white overflow-x-hidden">
+      <div className="flex flex-col min-h-screen overflow-x-hidden text-white bg-gray-900">
         <Header />
-        <main className="container mx-auto w-full max-w-screen-xl px-4 sm:px-8 flex-grow">
-          <Suspense fallback={<div className="text-center text-2xl mt-10">Loading...</div>}>
+        <main className="container flex-grow w-full max-w-screen-xl px-4 mx-auto sm:px-8">
+          <Suspense fallback={<div className="mt-10 text-2xl text-center">Loading...</div>}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/projects" element={<Projects />} />
@@ -39,8 +37,6 @@ const App: React.FC = () => {
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password/:token" element={<ResetPassword />} />
               <Route path="/learning" element={<Learning />} />
-              {/* Why: Protect the dashboard route with our new component. */}
-              {/* If the user is not authenticated, they will be redirected. */}
               <Route
                 path="/dashboard"
                 element={
@@ -54,7 +50,6 @@ const App: React.FC = () => {
           </Suspense>
         </main>
         <Footer />
-        {/* Why: This is where notifications will be displayed. */}
         <ToastContainer position="bottom-right" theme="dark" />
       </div>
     </Router>

@@ -1,6 +1,3 @@
-// src/pages/Skills.tsx
-// Why: This component fetches and displays the user's skills.
-
 import { motion } from "framer-motion";
 import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
@@ -16,8 +13,7 @@ const Skills: React.FC = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        // Why: Fetch skills from the API. We can use our advanced query features here!
-        const response = await api.get('/skills?sort=category,name&limit=1000'); // Sort by category then by name
+        const response = await api.get('/skills?sort=category,name&limit=1000');
         setSkills(response.data.data);
       } catch (err) {
         console.error('Failed to fetch skills:', err);
@@ -34,7 +30,7 @@ const Skills: React.FC = () => {
     return (
       <div className="flex items-center justify-center min-h-64">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-400 mx-auto mb-4"></div>
+          <div className="w-12 h-12 mx-auto mb-4 border-b-2 border-teal-400 rounded-full animate-spin"></div>
           <p className="text-lg text-gray-400">Loading skills...</p>
         </div>
       </div>
@@ -43,13 +39,13 @@ const Skills: React.FC = () => {
 
   if (error) {
     return (
-      <div className="text-center py-12">
-        <div className="bg-red-900/50 border border-red-600 text-red-300 px-6 py-4 rounded-lg max-w-md mx-auto">
-          <h2 className="text-xl font-semibold text-red-400 mb-2">Error Loading Skills</h2>
+      <div className="py-12 text-center">
+        <div className="max-w-md px-6 py-4 mx-auto text-red-300 border border-red-600 rounded-lg bg-red-900/50">
+          <h2 className="mb-2 text-xl font-semibold text-red-400">Error Loading Skills</h2>
           <p>{error}</p>
           <button 
             onClick={() => window.location.reload()} 
-            className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+            className="px-4 py-2 mt-4 text-white transition-colors bg-red-600 rounded hover:bg-red-700"
           >
             Try Again
           </button>
@@ -68,7 +64,6 @@ const Skills: React.FC = () => {
     );
   }
 
-  // Why: Group skills by category for a cleaner display.
   const skillsByCategory = skills.reduce((acc, skill) => {
     (acc[skill.category] = acc[skill.category] || []).push(skill);
     return acc;
@@ -80,22 +75,20 @@ const Skills: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h1 className="text-4xl font-bold mb-8 text-center text-teal-300">My Skills</h1>
-      {/* Why: Map over the grouped categories. */}
+      <h1 className="mb-8 text-4xl font-bold text-center text-teal-300">My Skills</h1>
       {Object.entries(skillsByCategory).map(([category, skillsInCat]) => (
         <section key={category} className="mb-8">
-          <h2 className="text-3xl font-bold text-teal-300 border-b-2 border-gray-700 pb-2 mb-4">
+          <h2 className="pb-2 mb-4 text-3xl font-bold text-teal-300 border-b-2 border-gray-700">
             {category}
           </h2>
           <div className="flex flex-wrap gap-4">
-            {/* Why: Map over the skills within each category. */}
             {skillsInCat.map((skill) => (
               <div
                 key={skill._id}
-                className="bg-gray-800 p-4 rounded-lg shadow-xl text-center transition-transform hover:scale-105 duration-200"
+                className="p-4 text-center transition-transform duration-200 bg-gray-800 rounded-lg shadow-xl hover:scale-105"
               >
                 <h3 className="text-xl font-semibold text-white">{skill.name}</h3>
-                <p className="text-gray-400 text-sm mt-1">{skill.proficiency}</p>
+                <p className="mt-1 text-sm text-gray-400">{skill.proficiency}</p>
               </div>
             ))}
           </div>

@@ -1,6 +1,3 @@
-// src/pages/Login.tsx
-// Why: This component provides a login form for existing users with role-based authentication.
-
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
@@ -24,16 +21,10 @@ const Login: React.FC = () => {
     setAuthLoading(true);
 
     try {
-      // Why: Call our backend's login endpoint using the new API service
       const response = await authAPI.login(email, password);
-      
-      // Why: Use the login function from our Zustand store to save the token and user
       login(response.token, response.user);
-
-      // Why: Show success message with role information
       toast.success(`Welcome back! Logged in as ${response.user.role}.`);
 
-      // Why: Redirect based on user role
       if (response.user.role === 'owner' || response.user.role === 'admin') {
         navigate('/dashboard');
       } else {
@@ -50,47 +41,47 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-8 rounded-lg shadow-xl bg-gray-800 border border-gray-700 mt-10">
-      <h1 className="text-4xl font-bold text-center mb-6 text-teal-300">Login</h1>
+    <div className="max-w-md p-8 mx-auto mt-10 bg-gray-800 border border-gray-700 rounded-lg shadow-xl">
+      <h1 className="mb-6 text-4xl font-bold text-center text-teal-300">Login</h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block text-gray-400 mb-2">Email</label>
+          <label className="block mb-2 text-gray-400">Email</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="w-full p-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
             placeholder="Enter your email"
           />
         </div>
         <div>
-          <label className="block text-gray-400 mb-2">Password</label>
+          <label className="block mb-2 text-gray-400">Password</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="w-full p-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
             placeholder="Enter your password"
           />
         </div>
         {error && (
-          <div className="bg-red-900/50 border border-red-600 text-red-300 px-4 py-3 rounded">
+          <div className="px-4 py-3 text-red-300 border border-red-600 rounded bg-red-900/50">
             {error}
           </div>
         )}
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-teal-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-teal-700 transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed"
+          className="w-full px-4 py-3 font-bold text-white transition-colors bg-teal-600 rounded-lg hover:bg-teal-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
         >
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
       <div className="mt-6 text-center">
-        <p className="text-gray-400 mb-2">
-          <Link to="/forgot-password" className="text-teal-400 hover:text-teal-300 underline">
+        <p className="mb-2 text-gray-400">
+          <Link to="/forgot-password" className="text-teal-400 underline hover:text-teal-300">
             Forgot Password?
           </Link>
         </p>
@@ -98,7 +89,7 @@ const Login: React.FC = () => {
           Don&apos;t have an account?{' '}
           <button
             onClick={() => navigate('/register')}
-            className="text-teal-400 hover:text-teal-300 underline"
+            className="text-teal-400 underline hover:text-teal-300"
           >
             Register here
           </button>

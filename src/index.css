@@ -1,8 +1,4 @@
-/* src/index.css */
-/* Tailwind CSS v4 imports */
 @import "tailwindcss";
-
-/* Custom styles can go here */
 
 /* Global responsive guards */
 html, body { overflow-x: hidden; }

@@ -1,5 +1,3 @@
-// src/pages/Dashboard.tsx
-
 import React, { useState } from 'react';
 import { useAuthStore } from '../store/authStore';
 import ManageProjects from '../components/ManageProjects';
@@ -22,14 +20,14 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="mx-auto w-full max-w-screen-xl px-4 sm:px-6 py-6">
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-teal-300 mb-4 text-center">
+    <div className="w-full max-w-screen-xl px-4 py-6 mx-auto sm:px-6">
+      <h1 className="mb-4 text-3xl font-extrabold text-center text-teal-300 sm:text-4xl md:text-5xl">
         Admin Dashboard
       </h1>
-      <p className="text-center text-gray-400 mb-10 text-xl">Welcome, {user.email}!</p>
+      <p className="mb-10 text-xl text-center text-gray-400">Welcome, {user.email}!</p>
 
-      <div className="flex justify-center mb-6 px-1">
-        <div className="bg-gray-800 p-2 rounded-xl flex flex-wrap gap-2 shadow-inner">
+      <div className="flex justify-center px-1 mb-6">
+        <div className="flex flex-wrap gap-2 p-2 bg-gray-800 shadow-inner rounded-xl">
           <button
             onClick={() => setActiveTab('projects')}
             className={`px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base rounded-lg font-bold transition-all ${
@@ -73,8 +71,8 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      <section className="bg-gray-900 p-8 rounded-lg shadow-2xl border border-gray-700">
-        <h2 className="text-4xl font-bold text-gray-200 mb-6 border-b-2 border-gray-700 pb-3">
+      <section className="p-8 bg-gray-900 border border-gray-700 rounded-lg shadow-2xl">
+        <h2 className="pb-3 mb-6 text-4xl font-bold text-gray-200 border-b-2 border-gray-700">
           {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Management
         </h2>
         {activeTab === 'projects' && (

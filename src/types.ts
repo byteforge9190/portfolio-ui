@@ -1,6 +1,3 @@
-// src/types.ts
-// Why: Centralized type definitions to match the backend API structure
-
 export interface User {
   id: string;
   email: string;
