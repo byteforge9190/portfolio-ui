@@ -26,13 +26,14 @@ export default function Home() {
           </div>
           <div className="mt-6 w-full overflow-hidden min-w-0 mx-auto motion-safe:[mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
            <MarqueeWords words={[
-            "React", "TypeScript", "JavaScript", "Node.js", "Fastify",
-            "Express", "Tailwind CSS", "HTML", "CSS",
-            "PostgreSQL", "Prisma", "MongoDB", "Firebase",
-            "Docker", "GitHub Actions", "Jest", "Swagger",
-            "WebSockets", "MQTT", "Netlify", "Render",
-            "JWT", "REST APIs", "Gemini LLM"
-           ]} />
+  "React", "TypeScript", "JavaScript", "Node.js", "Fastify",
+  "Express", "Tailwind CSS", "HTML", "CSS",
+  "PostgreSQL", "Prisma", "MongoDB", "Firebase",
+  "Docker", "GitHub Actions", "Jest", "Swagger",
+  "WebSockets", "MQTT", "Netlify", "Render",
+  "JWT", "REST APIs", "Gemini LLM",
+  "Prompt Engineering", "LLM Integration", "AI Pipelines"
+]} />
           </div>
         </div>
       </div>

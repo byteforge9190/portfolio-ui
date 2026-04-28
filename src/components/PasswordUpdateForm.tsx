@@ -15,7 +15,7 @@ const PasswordUpdateForm: React.FC<PasswordUpdateFormProps> = ({ onSuccess }) =>
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { login } = useAuthStore(); // Get login action to update token
+  const { login } = useAuthStore(); 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +36,6 @@ const PasswordUpdateForm: React.FC<PasswordUpdateFormProps> = ({ onSuccess }) =>
     try {
       const response = await authAPI.updatePassword(currentPassword, newPassword);
       
-      // Crucial: Update the token in the auth store and localStorage
       login(response.token, response.user); 
 
       toast.success('Password updated successfully!');
@@ -56,49 +55,49 @@ const PasswordUpdateForm: React.FC<PasswordUpdateFormProps> = ({ onSuccess }) =>
   };
 
   return (
-    <div className="bg-gray-800 p-6 rounded-lg shadow-xl border border-gray-700">
-      <h3 className="text-2xl font-bold text-teal-300 mb-4">Change Password</h3>
+    <div className="p-6 bg-gray-800 border border-gray-700 rounded-lg shadow-xl">
+      <h3 className="mb-4 text-2xl font-bold text-teal-300">Change Password</h3>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-gray-400 mb-2">Current Password</label>
+          <label className="block mb-2 text-gray-400">Current Password</label>
           <input
             type="password"
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
             required
-            className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="w-full p-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
         <div>
-          <label className="block text-gray-400 mb-2">New Password</label>
+          <label className="block mb-2 text-gray-400">New Password</label>
           <input
             type="password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             required
             minLength={6}
-            className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="w-full p-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
         <div>
-          <label className="block text-gray-400 mb-2">Confirm New Password</label>
+          <label className="block mb-2 text-gray-400">Confirm New Password</label>
           <input
             type="password"
             value={confirmNewPassword}
             onChange={(e) => setConfirmNewPassword(e.target.value)}
             required
-            className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="w-full p-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
         {error && (
-          <div className="bg-red-900/50 border border-red-600 text-red-300 px-4 py-3 rounded">
+          <div className="px-4 py-3 text-red-300 border border-red-600 rounded bg-red-900/50">
             {error}
           </div>
         )}
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-teal-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-teal-700 transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed"
+          className="w-full px-4 py-3 font-bold text-white transition-colors bg-teal-600 rounded-lg hover:bg-teal-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
         >
           {loading ? 'Updating...' : 'Update Password'}
         </button>
